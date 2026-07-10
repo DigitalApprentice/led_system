@@ -214,5 +214,5 @@ Once Wi-Fi connects (in STA client mode or AP fallback mode), the controller sta
 ---
 
 ## 📜 License
-This project is licensed under the MIT License - see the LICENSE details for info.
+This project is licensed under the AGPL v3 - see the LICENSE details for info.
 Copyright (c) Tomasz Zgrys (Digital-Apprentice) - 2022-2026.
