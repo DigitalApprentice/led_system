@@ -1,0 +1,2477 @@
+[
+  {
+    "mode": "noise",
+    "audio_reactive": true,
+    "desc": "Reactive Energy Sparkles"
+  },
+  {
+    "mode": "mixer",
+    "sections": 6,
+    "color_p": [
+      255,
+      0,
+      255
+    ],
+    "color_s": [
+      0,
+      255,
+      255
+    ],
+    "color_t": [
+      255,
+      255,
+      0
+    ],
+    "color_mode": 0,
+    "multiplier_mode": 4,
+    "effect_mode": 2,
+    "desc": "Mixer - 6-Section Center Split Sine"
+  },
+  {
+    "mode": "center_split",
+    "max_height": 36,
+    "center_offset": -7,
+    "show_peaks": true,
+    "enable_ghosting": true,
+    "ghosting_factor": 0.72,
+    "desc": "Center-Split Bars Visualizer"
+  },
+  {
+    "mode": "bars",
+    "orientation": "v",
+    "bar_size": 8,
+    "spacing": 2,
+    "show_peaks": true,
+    "enable_ghosting": true,
+    "ghosting_factor": 0.75,
+    "desc": "Vertical Equalizer Bars"
+  },
+  {
+    "mode": "bars",
+    "orientation": "h",
+    "bar_size": 9,
+    "spacing": 1,
+    "enable_symmetric": true,
+    "show_peaks": true,
+    "enable_ghosting": true,
+    "ghosting_factor": 0.6,
+    "desc": "Symmetric Equalizer Bars - Compact"
+  },
+  {
+    "mode": "bars",
+    "orientation": "h",
+    "bar_size": 8,
+    "spacing": 2,
+    "reverse_bands": true,
+    "enable_symmetric": false,
+    "show_peaks": true,
+    "enable_ghosting": true,
+    "ghosting_factor": 0.7,
+    "desc": "Symmetric Equalizer Bars - Balanced"
+  },
+  {
+    "mode": "bars",
+    "orientation": "h",
+    "bar_size": 9,
+    "spacing": 2,
+    "start_row": 18,
+    "reverse_bands": true,
+    "enable_symmetric": true,
+    "show_peaks": true,
+    "enable_ghosting": true,
+    "ghosting_factor": 0.7,
+    "desc": "Symmetric Equalizer Bars - Wide Offset"
+  },
+  {
+    "mode": "classic",
+    "direction": "bottom-up",
+    "start_row": 18,
+    "show_peaks": true,
+    "enable_ghosting": true,
+    "ghosting_factor": 0.65,
+    "desc": "Classic 3-Bar Visualizer"
+  },
+  {
+    "mode": "storm",
+    "color_p": [
+      255,
+      255,
+      255
+    ],
+    "desc": "Storm - Classic Lightning"
+  },
+  {
+    "mode": "static_bars",
+    "start_positions": [
+      137,
+      137,
+      137,
+      137
+    ],
+    "heights": [
+      -50,
+      -60,
+      -40,
+      -70
+    ],
+    "color_p": "RM",
+    "rainbow": true,
+    "desc": "Static Bars - Rainbow Gradient"
+  },
+  {
+    "mode": "static_bars",
+    "start_positions": [
+      137,
+      137,
+      137,
+      137
+    ],
+    "heights": [
+      -40,
+      -80,
+      -50,
+      -65
+    ],
+    "color_p": [
+      255,
+      0,
+      0
+    ],
+    "color_s": [
+      0,
+      255,
+      0
+    ],
+    "color_t": [
+      0,
+      0,
+      255
+    ],
+    "color_q": [
+      255,
+      200,
+      0
+    ],
+    "auto_brightness": true,
+    "desc": "Static Bars - Solid Red / Green / Blue / Yellow"
+  },
+  {
+    "mode": "static_bars",
+    "start_positions": [
+      137,
+      137,
+      137,
+      137
+    ],
+    "heights": [
+      -50,
+      -60,
+      -40,
+      -55
+    ],
+    "color_p": [
+      155,
+      80,
+      90
+    ],
+    "color_mode": "forest",
+    "target_brightness": 155,
+    "auto_brightness": true,
+    "desc": "Static Bars - Sunset Palette"
+  },
+  {
+    "mode": "static_bars",
+    "start_positions": [
+      137,
+      137,
+      137,
+      137
+    ],
+    "heights": [
+      -60,
+      -50,
+      -35,
+      -45
+    ],
+    "color_p": [
+      255,
+      180,
+      0
+    ],
+    "color_mode": "analogous",
+    "target_brightness": 80,
+    "auto_brightness": true,
+    "desc": "Static Bars - Neon Palette"
+  },
+  {
+    "mode": "static_bars",
+    "start_positions": [
+      137,
+      137,
+      137,
+      137
+    ],
+    "heights": [
+      -40,
+      -80,
+      -50,
+      -70
+    ],
+    "color_p": [
+      55,
+      120,
+      20
+    ],
+    "color_mode": "lava",
+    "auto_brightness": true,
+    "desc": "Static Bars - Ocean Palette"
+  },
+  {
+    "mode": "static_bars",
+    "start_positions": [
+      137,
+      137,
+      137,
+      137
+    ],
+    "heights": [
+      -100,
+      -75,
+      -85,
+      -90
+    ],
+    "color_p": [
+      40,
+      18,
+      5
+    ],
+    "color_s": [
+      110,
+      80,
+      68
+    ],
+    "color_t": [
+      60,
+      28,
+      8
+    ],
+    "color_q": [
+      75,
+      48,
+      35
+    ],
+    "auto_brightness": true,
+    "desc": "Static Bars - Cozy Dark Brown"
+  },
+  {
+    "mode": "static_bars",
+    "start_positions": [
+      137,
+      137,
+      137,
+      137
+    ],
+    "heights": [
+      -28,
+      -40,
+      -68,
+      -38
+    ],
+    "color_p": [
+      101,
+      67,
+      33
+    ],
+    "color_s": [
+      139,
+      69,
+      19
+    ],
+    "color_t": [
+      120,
+      82,
+      45
+    ],
+    "color_q": [
+      110,
+      75,
+      25
+    ],
+    "auto_brightness": true,
+    "desc": "Static Bars - Warm Brown Wall"
+  },
+  {
+    "mode": "static_bars",
+    "start_positions": [
+      137,
+      137,
+      137,
+      137
+    ],
+    "heights": [
+      -80,
+      -60,
+      -90,
+      -70
+    ],
+    "color_p": [
+      50,
+      20,
+      5
+    ],
+    "color_s": [
+      180,
+      90,
+      25
+    ],
+    "color_t": [
+      75,
+      35,
+      10
+    ],
+    "color_q": [
+      210,
+      120,
+      40
+    ],
+    "auto_brightness": true,
+    "desc": "Static Bars - Espresso & Amber"
+  },
+  {
+    "mode": "blocks",
+    "threshold": 0.6,
+    "desc": "Palette Equalizer Blocks"
+  },
+  {
+    "mode": "fast_bars",
+    "scale": 8,
+    "desc": "Direct Fast Audio Bars"
+  },
+  {
+    "mode": "fire_ice",
+    "max_height": 90,
+    "start_row": 0,
+    "desc": "Fire and Ice Split visualizer"
+  },
+  {
+    "mode": "spectrum",
+    "desc": "Concentric Spectrum EQ"
+  },
+  {
+    "mode": "spectrum1",
+    "desc": "Segmented Spectrum Bands"
+  },
+  {
+    "mode": "energy_bars",
+    "desc": "3-Band Direct Energy Bars"
+  },
+  {
+    "mode": "gradient_energy",
+    "desc": "Fluid Gradient Energy"
+  },
+  {
+    "mode": "spectrum_matrix",
+    "desc": "Frequency Spectrum Matrix"
+  },
+  {
+    "mode": "waterfall",
+    "desc": "Cascading Audio Waterfall"
+  },
+  {
+    "mode": "radial_audio",
+    "start_row": 0,
+    "desc": "Explosive Radial Audio Burst"
+  },
+  {
+    "mode": "vibrant_lights",
+    "desc": "Sleek Vibrant Scanlines"
+  },
+  {
+    "mode": "wave_audio",
+    "wave_height": 40,
+    "start_row": 0,
+    "desc": "Fluid Sine Wave Audio"
+  },
+  {
+    "mode": "mixer",
+    "sections": 4,
+    "color_mode": 2,
+    "multiplier_mode": 4,
+    "effect_mode": 2,
+    "beginning_offset": 10,
+    "delay_in": 40,
+    "delay_intermediate": 15,
+    "delay_out": 30,
+    "wait_time": 1500,
+    "desc": "Mixer - Quad Sinusoidal Split"
+  },
+  {
+    "mode": "waterfall",
+    "scroll_speed": 0.4,
+    "desc": "Waterfall - Glacial Drift"
+  },
+  {
+    "mode": "waterfall",
+    "scroll_speed": 1.5,
+    "desc": "Waterfall - Vibrant Stream"
+  },
+  {
+    "mode": "waterfall",
+    "scroll_speed": 2.8,
+    "desc": "Waterfall - Raging Torrent"
+  },
+  {
+    "mode": "wave_audio",
+    "wave_height": 20,
+    "start_row": 10,
+    "desc": "Wave Audio - Short Gentle Sine"
+  },
+  {
+    "mode": "wave_audio",
+    "wave_height": 50,
+    "start_row": 0,
+    "desc": "Wave Audio - Tall Ground Sine"
+  },
+  {
+    "mode": "wave_audio",
+    "wave_height": 35,
+    "start_row": 20,
+    "desc": "Wave Audio - Mid-Point Sine"
+  },
+  {
+    "mode": "energy_bars",
+    "gain": 0.5,
+    "desc": "Energy Bars - Soft Level"
+  },
+  {
+    "mode": "energy_bars",
+    "gain": 1.4,
+    "desc": "Energy Bars - Boosted Level"
+  },
+  {
+    "mode": "energy_bars",
+    "gain": 2.0,
+    "desc": "Energy Bars - Clipping Hot"
+  },
+  {
+    "mode": "vibrant_lights",
+    "line_density": 5,
+    "desc": "Vibrant - Thick Moving Bars"
+  },
+  {
+    "mode": "vibrant_lights",
+    "line_density": 14,
+    "desc": "Vibrant - Medium Scanlines"
+  },
+  {
+    "mode": "vibrant_lights",
+    "line_density": 28,
+    "desc": "Vibrant - Dense Fine Scanlines"
+  },
+  {
+    "mode": "spectrum_matrix",
+    "columns": 2,
+    "desc": "Spectrum Matrix - Stereo Dual Band"
+  },
+  {
+    "mode": "spectrum_matrix",
+    "columns": 4,
+    "desc": "Spectrum Matrix - Quad Band"
+  },
+  {
+    "mode": "spectrum_matrix",
+    "columns": 8,
+    "desc": "Spectrum Matrix - Octa Band"
+  },
+  {
+    "mode": "fire_ice",
+    "max_height": 28,
+    "start_row": 15,
+    "desc": "Fire Ice - Low Split Point"
+  },
+  {
+    "mode": "fire_ice",
+    "max_height": 45,
+    "start_row": 30,
+    "desc": "Fire Ice - High Split Point"
+  },
+  {
+    "mode": "spectrum1",
+    "scale": 0.6,
+    "desc": "Spectrum1 - Soft Flow"
+  },
+  {
+    "mode": "spectrum1",
+    "scale": 1.5,
+    "desc": "Spectrum1 - Loud Peaks"
+  },
+  {
+    "mode": "spectrum1",
+    "scale": 2.0,
+    "desc": "Spectrum1 - Giant Bars"
+  },
+  {
+    "mode": "fast_bars",
+    "scale": 4,
+    "desc": "Fast Bars - Short Peaks"
+  },
+  {
+    "mode": "fast_bars",
+    "scale": 14,
+    "desc": "Fast Bars - Extreme Height"
+  },
+  {
+    "mode": "radial_audio",
+    "start_row": 15,
+    "desc": "Radial Audio - Mid-Point Burst"
+  },
+  {
+    "mode": "radial_audio",
+    "start_row": 30,
+    "desc": "Radial Audio - High Center Burst"
+  },
+  {
+    "mode": "classic",
+    "direction": "bottom-up",
+    "show_peaks": true,
+    "enable_ghosting": true,
+    "ghosting_factor": 0.8,
+    "desc": "Classic - Upward with Peaks"
+  },
+  {
+    "mode": "classic",
+    "direction": "top-down",
+    "show_peaks": true,
+    "enable_ghosting": true,
+    "ghosting_factor": 0.6,
+    "desc": "Classic - Downward with Peaks"
+  },
+  {
+    "mode": "classic",
+    "direction": "bottom-up",
+    "show_peaks": false,
+    "enable_ghosting": true,
+    "ghosting_factor": 0.7,
+    "desc": "Classic - Smooth No-Peaks"
+  },
+  {
+    "mode": "center_split",
+    "max_height": 28,
+    "center_offset": -5,
+    "show_peaks": true,
+    "enable_ghosting": true,
+    "ghosting_factor": 0.65,
+    "desc": "Center Split - Fast Reactive"
+  },
+  {
+    "mode": "center_split",
+    "max_height": 36,
+    "center_offset": -10,
+    "show_peaks": false,
+    "enable_ghosting": true,
+    "ghosting_factor": 0.8,
+    "desc": "Center Split - Smooth Tall"
+  },
+  {
+    "mode": "center_split",
+    "max_height": 20,
+    "center_offset": 0,
+    "show_peaks": true,
+    "enable_ghosting": false,
+    "ghosting_factor": 0.5,
+    "desc": "Center Split - Sharp Low"
+  },
+  {
+    "mode": "spectrum",
+    "hue_offset": 0.33,
+    "desc": "Spectrum EQ - Golden Shift"
+  },
+  {
+    "mode": "spectrum",
+    "hue_offset": 0.66,
+    "desc": "Spectrum EQ - Indigo Shift"
+  },
+  {
+    "mode": "spectrum",
+    "hue_offset": 0.15,
+    "desc": "Spectrum EQ - Emerald Shift"
+  },
+  {
+    "mode": "gradient_energy",
+    "speed": 0.4,
+    "desc": "Gradient Energy - Slow Lava Flow"
+  },
+  {
+    "mode": "gradient_energy",
+    "speed": 1.5,
+    "desc": "Gradient Energy - Vibrant Mid-Flow"
+  },
+  {
+    "mode": "gradient_energy",
+    "speed": 2.8,
+    "desc": "Gradient Energy - Rapid Surge"
+  },
+  {
+    "mode": "blocks",
+    "threshold": 1.2,
+    "desc": "Blocks - High Sensitivity"
+  },
+  {
+    "mode": "blocks",
+    "threshold": 0.8,
+    "desc": "Blocks - Bass Heavy"
+  },
+  {
+    "mode": "blocks",
+    "threshold": 1.7,
+    "desc": "Blocks - Selective Hard Hits"
+  },
+  {
+    "mode": "bars",
+    "direction": "down",
+    "show_peaks": true,
+    "enable_ghosting": true,
+    "ghosting_factor": 0.7,
+    "desc": "Bars - Symmetric Ghosting Peaks"
+  },
+  {
+    "mode": "bars",
+    "direction": "up",
+    "show_peaks": false,
+    "enable_ghosting": true,
+    "ghosting_factor": 0.55,
+    "desc": "Bars - Smooth No-Peaks"
+  },
+  {
+    "mode": "quantum_rift",
+    "rotation_speed": 2.5,
+    "desc": "Quantum Rift - Mid Energy Rift"
+  },
+  {
+    "mode": "quantum_rift",
+    "rotation_speed": 5.0,
+    "desc": "Quantum Rift - High Energy Collapse"
+  },
+  {
+    "mode": "attractor",
+    "mass": 120,
+    "particles": 75,
+    "size": 1,
+    "friction": 8,
+    "ghosting": 0.87,
+    "color_by_age": false,
+    "move_attractor": false,
+    "swallow": false,
+    "desc": "PS Attractor - 3 streams center"
+  },
+  {
+    "mode": "attractor",
+    "mass": 160,
+    "particles": 75,
+    "size": 1,
+    "friction": 12,
+    "ghosting": 0.84,
+    "color_by_age": true,
+    "move_attractor": true,
+    "swallow": false,
+    "desc": "PS Attractor - wave age-color"
+  },
+  {
+    "mode": "attractor",
+    "mass": 200,
+    "particles": 75,
+    "size": 1,
+    "friction": 20,
+    "ghosting": 0.9,
+    "color_by_age": false,
+    "move_attractor": true,
+    "swallow": true,
+    "desc": "PS Attractor - river swallow"
+  },
+  {
+    "mode": "gravity_bounce",
+    "desc": "Physics Bouncing Audio Dots"
+  },
+  {
+    "mode": "gravity_well",
+    "desc": "Physics Gravity Well Glow"
+  },
+  {
+    "mode": "pendulum_audio",
+    "desc": "Bouncing Audio Pendulum"
+  },
+  {
+    "mode": "spring_balls",
+    "desc": "Laser Bouncing Comets"
+  },
+  {
+    "mode": "gravity_orbiters",
+    "gravity": 0.5,
+    "friction": 0.995,
+    "n_orbiters": 2,
+    "desc": "Orbiters - Slow Dual Pulses"
+  },
+  {
+    "mode": "gravity_orbiters",
+    "gravity": 1.3,
+    "friction": 0.99,
+    "n_orbiters": 3,
+    "desc": "Orbiters - Triple Standard Orbit"
+  },
+  {
+    "mode": "gravity_orbiters",
+    "gravity": 2.2,
+    "friction": 0.96,
+    "n_orbiters": 5,
+    "desc": "Orbiters - Frenzy Five"
+  },
+  {
+    "mode": "gravity_orbiters",
+    "gravity": 1.8,
+    "friction": 0.985,
+    "n_orbiters": 4,
+    "desc": "Orbiters - Elastic Four Pull"
+  },
+  {
+    "mode": "planet_orbit",
+    "gravity": 1.0,
+    "speed": 1.5,
+    "planet_count": 2,
+    "desc": "Planets - Binary System"
+  },
+  {
+    "mode": "planet_orbit",
+    "gravity": 2.0,
+    "speed": 1.0,
+    "planet_count": 3,
+    "desc": "Planets - Balanced Triple"
+  },
+  {
+    "mode": "planet_orbit",
+    "gravity": 3.0,
+    "speed": 1.2,
+    "planet_count": 4,
+    "desc": "Planets - High-Speed Quad"
+  },
+  {
+    "mode": "planet_orbit",
+    "gravity": 4.5,
+    "speed": 0.6,
+    "planet_count": 5,
+    "desc": "Planets - Massive Cluster"
+  },
+  {
+    "mode": "gravity_cascade",
+    "gravity": 0.08,
+    "wind": 0.0,
+    "bounce": 0.9,
+    "desc": "Cascade - Pure Elastic Bounce"
+  },
+  {
+    "mode": "gravity_cascade",
+    "gravity": 0.15,
+    "wind": 0.5,
+    "bounce": 0.7,
+    "desc": "Cascade - Standard Wind Drift"
+  },
+  {
+    "mode": "gravity_cascade",
+    "gravity": 0.3,
+    "wind": 1.5,
+    "bounce": 0.8,
+    "desc": "Cascade - High Wind Bounce"
+  },
+  {
+    "mode": "gravity_cascade",
+    "gravity": 0.1,
+    "wind": -0.5,
+    "bounce": 0.5,
+    "desc": "Cascade - Leftward Heavy Fall"
+  },
+  {
+    "mode": "black_hole",
+    "gravity": 1.5,
+    "swallow_radius": 1.0,
+    "particle_count": 45,
+    "desc": "Black Hole - Micro Horizon"
+  },
+  {
+    "mode": "black_hole",
+    "gravity": 2.5,
+    "swallow_radius": 2.0,
+    "particle_count": 80,
+    "desc": "Black Hole - Balanced Singularity"
+  },
+  {
+    "mode": "black_hole",
+    "gravity": 4.5,
+    "swallow_radius": 3.5,
+    "particle_count": 80,
+    "desc": "Black Hole - Massive Collapse"
+  },
+  {
+    "mode": "black_hole",
+    "gravity": 3.2,
+    "swallow_radius": 1.5,
+    "particle_count": 80,
+    "desc": "Black Hole - Intense Accretion"
+  },
+  {
+    "mode": "attractor",
+    "mass": 80,
+    "particles": 60,
+    "friction": 0,
+    "ghosting": 0.72,
+    "desc": "Attractor - Light Orbit"
+  },
+  {
+    "mode": "gravity_bounce",
+    "gravity": 0.08,
+    "bounce": 0.9,
+    "desc": "Gravity Bounce - Super Elastic"
+  },
+  {
+    "mode": "gravity_bounce",
+    "gravity": 0.2,
+    "bounce": 0.65,
+    "desc": "Gravity Bounce - Standard Physics"
+  },
+  {
+    "mode": "gravity_bounce",
+    "gravity": 0.3,
+    "bounce": 0.45,
+    "desc": "Gravity Bounce - Heavy Damped"
+  },
+  {
+    "mode": "pendulum_audio",
+    "friction": 0.99,
+    "desc": "Pendulum - High Inertia Swing"
+  },
+  {
+    "mode": "pendulum_audio",
+    "friction": 0.9,
+    "desc": "Pendulum - Heavy Friction Stop"
+  },
+  {
+    "mode": "pendulum_audio",
+    "friction": 0.96,
+    "desc": "Pendulum - Balanced Arc"
+  },
+  {
+    "mode": "spring_balls",
+    "elasticity": 0.6,
+    "desc": "Spring Balls - Heavy Damped"
+  },
+  {
+    "mode": "spring_balls",
+    "elasticity": 0.85,
+    "desc": "Spring Balls - Balanced Springs"
+  },
+  {
+    "mode": "spring_balls",
+    "elasticity": 0.98,
+    "desc": "Spring Balls - Near Infinite Bounce"
+  },
+  {
+    "mode": "gravity_well",
+    "gravity": 1.2,
+    "desc": "Gravity Well - Gentle Pull"
+  },
+  {
+    "mode": "gravity_well",
+    "gravity": 2.5,
+    "desc": "Gravity Well - Strong Vortex"
+  },
+  {
+    "mode": "gravity_well",
+    "gravity": 4.5,
+    "desc": "Gravity Well - Black Hole Core"
+  },
+  {
+    "mode": "quantum_rift",
+    "rotation_speed": 0.8,
+    "desc": "Quantum Rift - Slow Gravity Orbit"
+  },
+  {
+    "mode": "sandclock",
+    "speed": 1.0,
+    "color_p": [
+      230,
+      160,
+      10
+    ],
+    "desc": "Sandclock - Amber Sand Normal"
+  },
+  {
+    "mode": "sandclock",
+    "speed": 2.0,
+    "color_p": [
+      230,
+      160,
+      10
+    ],
+    "desc": "Sandclock - Amber Sand Fast"
+  },
+  {
+    "mode": "sandclock",
+    "speed": 0.5,
+    "color_p": [
+      100,
+      200,
+      255
+    ],
+    "desc": "Sandclock - Ice Blue Slow"
+  },
+  {
+    "mode": "sandclock",
+    "speed": 1.5,
+    "color_p": [
+      255,
+      80,
+      40
+    ],
+    "desc": "Sandclock - Lava Red Mid"
+  },
+  {
+    "mode": "plasma",
+    "speed": 1.8,
+    "desc": "Hyper-Fast Plasma"
+  },
+  {
+    "mode": "plasma",
+    "speed": 0.5,
+    "ghosting": 0.95,
+    "desc": "Slow Ghostly Plasma"
+  },
+  {
+    "mode": "radial",
+    "speed": 1.8,
+    "desc": "Fast Radial Pulses"
+  },
+  {
+    "mode": "dna",
+    "scroll_speed": 6.0,
+    "cycles": 3,
+    "ghosting": 0,
+    "audio_reactive": true,
+    "desc": "DNA Helix - audio reactive"
+  },
+  {
+    "mode": "dna",
+    "scroll_speed": 10.0,
+    "cycles": 2,
+    "ghosting": 0,
+    "audio_reactive": false,
+    "desc": "DNA Helix - fast scroll"
+  },
+  {
+    "mode": "dna",
+    "scroll_speed": 4.0,
+    "cycles": 4,
+    "ghosting": 0,
+    "audio_reactive": true,
+    "desc": "DNA Helix - slow coils"
+  },
+  {
+    "mode": "mixer",
+    "sections": 8,
+    "color_p": [
+      255,
+      0,
+      0
+    ],
+    "color_s": [
+      0,
+      0,
+      255
+    ],
+    "color_mode": 2,
+    "multiplier_mode": 2,
+    "effect_mode": 1,
+    "desc": "Mixer - Red-Blue Column Gradient Scroll"
+  },
+  {
+    "mode": "mixer",
+    "sections": 12,
+    "color_mode": 0,
+    "multiplier_mode": 7,
+    "effect_mode": 1,
+    "beginning_offset": 0,
+    "delay_in": 35,
+    "delay_intermediate": 120,
+    "delay_out": 40,
+    "wait_time": 6000,
+    "desc": "Mixer - 12-Sect Stepped Pulse Ultra Long"
+  },
+  {
+    "mode": "motion_patterns",
+    "pattern": "segments",
+    "color_mode": "pal_complementary",
+    "motion": "oscillate",
+    "speed": 1.2,
+    "segment_len": 12,
+    "spacing": 18,
+    "bg_brightness": 15,
+    "audio_reactive": true,
+    "desc": "Oscillating Palette Segments with Audio Ambient Glow"
+  },
+  {
+    "mode": "motion_patterns",
+    "pattern": "meteor",
+    "color_mode": "complementary",
+    "motion": "bounce",
+    "speed": 1.4,
+    "segment_len": 20,
+    "audio_reactive": true,
+    "desc": "Bouncing Audio-Reactive Complementary Meteor"
+  },
+  {
+    "mode": "motion_patterns",
+    "pattern": "firefly",
+    "color_mode": "rainbow",
+    "motion": "cruise",
+    "speed": 0.6,
+    "spacing": 25,
+    "bg_brightness": 8,
+    "audio_reactive": true,
+    "desc": "Drifting Rainbow Firefly Swarm"
+  },
+  {
+    "mode": "motion_patterns",
+    "pattern": "beat_chase",
+    "color_mode": "pal_complementary",
+    "speed": 0.7,
+    "segment_len": 8,
+    "audio_reactive": true,
+    "desc": "Beat-Triggered Traveling Color Packets"
+  },
+  {
+    "mode": "motion_patterns",
+    "pattern": "meteor",
+    "color_mode": "sunset",
+    "motion": "cruise",
+    "speed": 1.3,
+    "direction": 1,
+    "segment_len": 25,
+    "audio_reactive": true,
+    "desc": "Cruising Sunset Lava-Meteor"
+  },
+  {
+    "mode": "rainbow_effect",
+    "delay": 15,
+    "color_step": 2,
+    "desc": "Rainbow Effect - Fast Dynamic Sweep"
+  },
+  {
+    "mode": "beat_flash",
+    "threshold": 0.7,
+    "desc": "Beat Flash Pulse"
+  },
+  {
+    "mode": "bpm_pulse",
+    "desc": "Tempo BPM Pulse"
+  },
+  {
+    "mode": "pulse",
+    "desc": "Unified Audio Pulse"
+  },
+  {
+    "mode": "rotating",
+    "desc": "Rotating Band Grid"
+  },
+  {
+    "mode": "plasma_audio",
+    "speed": 3.0,
+    "intensity": 1.5,
+    "desc": "Reactive Plasma Fluid"
+  },
+  {
+    "mode": "mixer",
+    "sections": 6,
+    "color_mode": 0,
+    "multiplier_mode": 3,
+    "effect_mode": 3,
+    "beginning_offset": 0,
+    "delay_in": 50,
+    "delay_intermediate": 50,
+    "delay_out": 50,
+    "wait_time": 2000,
+    "desc": "Mixer - Hexa Section Rainbow"
+  },
+  {
+    "mode": "pulse",
+    "color": [
+      0,
+      140,
+      255
+    ],
+    "desc": "Pulse - Ocean Blue"
+  },
+  {
+    "mode": "pulse",
+    "color": [
+      255,
+      60,
+      0
+    ],
+    "desc": "Pulse - Ember Red"
+  },
+  {
+    "mode": "pulse",
+    "color": [
+      170,
+      0,
+      255
+    ],
+    "desc": "Pulse - Violet Surge"
+  },
+  {
+    "mode": "radial",
+    "speed": 0.5,
+    "ghosting": 0.8,
+    "desc": "Radial - Slow Shockwave"
+  },
+  {
+    "mode": "radial",
+    "speed": 1.5,
+    "ghosting": 0.6,
+    "desc": "Radial - Pulse Wave"
+  },
+  {
+    "mode": "radial",
+    "speed": 3.0,
+    "ghosting": 0.35,
+    "desc": "Radial - Supernova Burst"
+  },
+  {
+    "mode": "rainbow_effect",
+    "delay": 15,
+    "color_step": 3,
+    "desc": "Rainbow - Hyperspeed Sweep"
+  },
+  {
+    "mode": "rainbow_effect",
+    "delay": 50,
+    "color_step": 1,
+    "desc": "Rainbow - Slow Liquid Sweep"
+  },
+  {
+    "mode": "rainbow_effect",
+    "delay": 30,
+    "color_step": 8,
+    "desc": "Rainbow - High Contrast Bands"
+  },
+  {
+    "mode": "dna",
+    "scroll_speed": 3.0,
+    "cycles": 2,
+    "ghosting": 0.8,
+    "desc": "DNA - Slow Double Helix"
+  },
+  {
+    "mode": "plasma_audio",
+    "speed": 1.5,
+    "intensity": 0.8,
+    "desc": "Plasma Audio - Quiet Fluid"
+  },
+  {
+    "mode": "plasma_audio",
+    "speed": 4.0,
+    "intensity": 2.0,
+    "desc": "Plasma Audio - Furious Sparks"
+  },
+  {
+    "mode": "plasma_audio",
+    "speed": 0.5,
+    "intensity": 2.5,
+    "desc": "Plasma Audio - Deep Lava"
+  },
+  {
+    "mode": "bpm_pulse",
+    "speed": 0.5,
+    "desc": "BPM Pulse - Half Time"
+  },
+  {
+    "mode": "bpm_pulse",
+    "speed": 1.5,
+    "desc": "BPM Pulse - Club Beat"
+  },
+  {
+    "mode": "bpm_pulse",
+    "speed": 2.5,
+    "desc": "BPM Pulse - Double Time"
+  },
+  {
+    "mode": "plasma",
+    "speed": 0.5,
+    "ghosting": 0.8,
+    "desc": "Plasma - Slow Lava Lamp"
+  },
+  {
+    "mode": "plasma",
+    "speed": 2.0,
+    "ghosting": 0.5,
+    "desc": "Plasma - Fast Psychedelic"
+  },
+  {
+    "mode": "rotating",
+    "hue_offset": 0.25,
+    "desc": "Rotating Grid - Warm Hue Shift"
+  },
+  {
+    "mode": "rotating",
+    "hue_offset": 0.5,
+    "desc": "Rotating Grid - Cyan Hue Shift"
+  },
+  {
+    "mode": "rotating",
+    "hue_offset": 0.75,
+    "desc": "Rotating Grid - Magenta Hue Shift"
+  },
+  {
+    "mode": "beat_impact",
+    "gain": 0.7,
+    "desc": "Beat Impact - Gentle Pulse"
+  },
+  {
+    "mode": "shapes",
+    "shape_type": "star",
+    "ghosting": 0,
+    "speed": 3.5,
+    "audio_reactive": false,
+    "desc": "Scrolling Stars"
+  },
+  {
+    "mode": "rain_v",
+    "direction": -1,
+    "ghosting": 0,
+    "speed": 20,
+    "audio_reactive": false,
+    "desc": "Vertical Rain"
+  },
+  {
+    "mode": "rain_h",
+    "direction": 1,
+    "ghosting": 0,
+    "speed": 20,
+    "audio_reactive": false,
+    "desc": "Horizontal Rain"
+  },
+  {
+    "mode": "fire",
+    "cooling": 22,
+    "sparking": 95,
+    "audio_reactive": true,
+    "speed": 2,
+    "desc": "PS Fire - audio reactive high"
+  },
+  {
+    "mode": "fire",
+    "cooling": 15,
+    "sparking": 80,
+    "audio_reactive": false,
+    "speed": 3,
+    "desc": "PS Fire - steady high flame"
+  },
+  {
+    "mode": "fire",
+    "cooling": 18,
+    "sparking": 110,
+    "audio_reactive": false,
+    "speed": 2,
+    "desc": "PS Fire - intense sparks high"
+  },
+  {
+    "mode": "fireworks",
+    "sparks_per_burst": 14,
+    "gravity": 3,
+    "min_interval": 0,
+    "audio_reactive": true,
+    "desc": "Fireworks - beat triggered"
+  },
+  {
+    "mode": "fireworks",
+    "sparks_per_burst": 20,
+    "gravity": 2,
+    "min_interval": 200,
+    "audio_reactive": true,
+    "desc": "Fireworks - heavy shower"
+  },
+  {
+    "mode": "fireworks",
+    "sparks_per_burst": 10,
+    "gravity": 4,
+    "min_interval": 300,
+    "audio_reactive": false,
+    "desc": "Fireworks - slow ambient"
+  },
+  {
+    "mode": "sparkles",
+    "sparkle_count": 4,
+    "enable_ghosting": true,
+    "ghosting_factor": 0.68,
+    "desc": "Twinkling Time-fade Sparkles"
+  },
+  {
+    "mode": "bg_fire",
+    "cooling": 40,
+    "sparking": 70,
+    "color_p": [
+      255,
+      100,
+      0
+    ],
+    "desc": "Background Fire - Hot Orange"
+  },
+  {
+    "mode": "bg_fire",
+    "cooling": 45,
+    "sparking": 100,
+    "color_p": [
+      0,
+      255,
+      255
+    ],
+    "desc": "Background Fire - Cyan Ice"
+  },
+  {
+    "mode": "storm2",
+    "color_p": "R",
+    "solid_color": false,
+    "desc": "Storm2 - Colorful Serpentine Lightning"
+  },
+  {
+    "mode": "stars",
+    "delay": 15,
+    "stars_quantity": 32,
+    "color_p": "R",
+    "color_s": [
+      0,
+      0,
+      0
+    ],
+    "step": 3,
+    "desc": "Stars - Twinkling Palette"
+  },
+  {
+    "mode": "comet",
+    "comets_quantity": 3,
+    "braid_length": 8,
+    "color_p": "R",
+    "color_s": [
+      0,
+      0,
+      0
+    ],
+    "color_mixing": "add",
+    "desc": "Comet - Multiple Chasing Streams"
+  },
+  {
+    "mode": "sparks",
+    "color_p": "RM",
+    "rnd_fac": 0.35,
+    "desc": "Sparks - Random Color Bursts"
+  },
+  {
+    "mode": "beat_impact",
+    "desc": "Audio Beat Impact Glow"
+  },
+  {
+    "mode": "flux_onset",
+    "desc": "Onsets Flux Flash"
+  },
+  {
+    "mode": "rain",
+    "start_row": 0,
+    "fall_speed": 1.0,
+    "desc": "Audio-Reactive Falling Rain"
+  },
+  {
+    "mode": "flux_onset",
+    "threshold": 0.9,
+    "desc": "Flux Onset - Ultra Sensitive"
+  },
+  {
+    "mode": "flux_onset",
+    "threshold": 1.4,
+    "desc": "Flux Onset - Balanced Flash"
+  },
+  {
+    "mode": "flux_onset",
+    "threshold": 2.0,
+    "desc": "Flux Onset - Heavy Hits Only"
+  },
+  {
+    "mode": "fire",
+    "cooling": 55,
+    "sparking": 120,
+    "audio_reactive": true,
+    "speed": 2.0,
+    "desc": "Fire - Audio-Reactive High Flame"
+  },
+  {
+    "mode": "noise",
+    "audio_reactive": true,
+    "speed": 0.6,
+    "ghosting": 0.85,
+    "desc": "Noise - Slow Ambient Haze"
+  },
+  {
+    "mode": "noise",
+    "audio_reactive": true,
+    "speed": 1.8,
+    "ghosting": 0.55,
+    "desc": "Noise - Fast Electric Sparks"
+  },
+  {
+    "mode": "noise",
+    "audio_reactive": false,
+    "speed": 1.0,
+    "ghosting": 0.75,
+    "desc": "Noise - Steady Lava Texture"
+  },
+  {
+    "mode": "rain_v",
+    "direction": -1,
+    "ghosting": 0.55,
+    "speed": 6,
+    "audio_reactive": true,
+    "desc": "Rain V - Reactive Drizzle"
+  },
+  {
+    "mode": "rain_v",
+    "direction": -1,
+    "ghosting": 0.1,
+    "speed": 20,
+    "audio_reactive": false,
+    "desc": "Rain V - Torrential Downpour"
+  },
+  {
+    "mode": "rain_v",
+    "direction": 1,
+    "ghosting": 0.4,
+    "speed": 10,
+    "audio_reactive": false,
+    "desc": "Rain V - Upward Shower"
+  },
+  {
+    "mode": "storm2",
+    "color_p": [
+      255,
+      255,
+      255
+    ],
+    "solid_color": true,
+    "desc": "Storm2 - Solid White Bolts"
+  },
+  {
+    "mode": "storm2",
+    "color_p": [
+      255,
+      0,
+      255
+    ],
+    "solid_color": false,
+    "desc": "Storm2 - Magenta Serpent"
+  },
+  {
+    "mode": "storm2",
+    "color_p": [
+      0,
+      255,
+      255
+    ],
+    "solid_color": false,
+    "desc": "Storm2 - Cyan Serpentine"
+  },
+  {
+    "mode": "fire_ice",
+    "max_height": 36,
+    "start_row": 0,
+    "desc": "Fire Ice - Ground-Up Fire"
+  },
+  {
+    "mode": "fireworks",
+    "sparks_per_burst": 8,
+    "gravity": 2,
+    "min_interval": 800,
+    "audio_reactive": false,
+    "desc": "Fireworks - Sparse Ambient"
+  },
+  {
+    "mode": "stars",
+    "delay": 30,
+    "stars_quantity": 8,
+    "color_p": [
+      255,
+      255,
+      255
+    ],
+    "color_s": [
+      0,
+      0,
+      255
+    ],
+    "step": 3,
+    "desc": "Stars - Blue White Cluster"
+  },
+  {
+    "mode": "stars",
+    "delay": 60,
+    "stars_quantity": 4,
+    "color_p": [
+      255,
+      200,
+      0
+    ],
+    "color_s": [
+      255,
+      0,
+      0
+    ],
+    "step": 1,
+    "desc": "Stars - Amber Glow"
+  },
+  {
+    "mode": "stars",
+    "delay": 15,
+    "stars_quantity": 12,
+    "color_p": [
+      255,
+      0,
+      255
+    ],
+    "color_s": [
+      0,
+      255,
+      255
+    ],
+    "step": 5,
+    "desc": "Stars - Cyberpunk Twinkle"
+  },
+  {
+    "mode": "sparks",
+    "color_p": [
+      255,
+      100,
+      0
+    ],
+    "rnd_fac": 0.6,
+    "desc": "Sparks - Volcanic Ash"
+  },
+  {
+    "mode": "sparks",
+    "color_p": [
+      255,
+      255,
+      255
+    ],
+    "rnd_fac": 0.15,
+    "desc": "Sparks - Welder Flashes"
+  },
+  {
+    "mode": "sparks",
+    "color_p": [
+      80,
+      0,
+      255
+    ],
+    "rnd_fac": 0.85,
+    "desc": "Sparks - Electric Arcs"
+  },
+  {
+    "mode": "rain",
+    "start_row": 0,
+    "fall_speed": 2.0,
+    "desc": "Rain - Fast Storm Drop"
+  },
+  {
+    "mode": "rain",
+    "start_row": 20,
+    "fall_speed": 0.5,
+    "desc": "Rain - Slow Floating Drizzle"
+  },
+  {
+    "mode": "rain",
+    "start_row": 8,
+    "fall_speed": 1.2,
+    "desc": "Rain - Balanced Shower"
+  },
+  {
+    "mode": "beat_flash",
+    "threshold": 1.2,
+    "desc": "Beat Flash - Sensitive Highs"
+  },
+  {
+    "mode": "beat_flash",
+    "threshold": 0.8,
+    "desc": "Beat Flash - Deep Bass Flash"
+  },
+  {
+    "mode": "beat_flash",
+    "threshold": 1.8,
+    "desc": "Beat Flash - Big Hits Only"
+  },
+  {
+    "mode": "rain_h",
+    "direction": 1,
+    "ghosting": 0.55,
+    "speed": 6,
+    "audio_reactive": true,
+    "desc": "Rain H - Reactive Side Drizzle"
+  },
+  {
+    "mode": "rain_h",
+    "direction": -1,
+    "ghosting": 0.1,
+    "speed": 20,
+    "audio_reactive": false,
+    "desc": "Rain H - Leftward Torrent"
+  },
+  {
+    "mode": "rain_h",
+    "direction": 1,
+    "ghosting": 0.4,
+    "speed": 10,
+    "audio_reactive": false,
+    "desc": "Rain H - Rightward Shower"
+  },
+  {
+    "mode": "comet",
+    "comets_quantity": 2,
+    "braid_length": 25,
+    "color_p": [
+      255,
+      0,
+      0
+    ],
+    "color_s": [
+      255,
+      255,
+      0
+    ],
+    "color_mixing": "add",
+    "desc": "Comet - Dual Fireballs"
+  },
+  {
+    "mode": "comet",
+    "comets_quantity": 4,
+    "braid_length": 12,
+    "color_p": [
+      0,
+      255,
+      255
+    ],
+    "color_s": [
+      255,
+      0,
+      255
+    ],
+    "color_mixing": "blend",
+    "desc": "Comet - Quad Cyber Chase"
+  },
+  {
+    "mode": "comet",
+    "comets_quantity": 1,
+    "braid_length": 45,
+    "color_p": [
+      255,
+      255,
+      255
+    ],
+    "color_s": [
+      80,
+      80,
+      80
+    ],
+    "color_mixing": "add",
+    "desc": "Comet - Single Mega Tail"
+  },
+  {
+    "mode": "storm",
+    "color_p": [
+      130,
+      200,
+      255
+    ],
+    "desc": "Storm - Cyan Flickering"
+  },
+  {
+    "mode": "storm",
+    "color_p": [
+      255,
+      80,
+      80
+    ],
+    "desc": "Storm - Crimson Raging"
+  },
+  {
+    "mode": "bg_fire",
+    "cooling": 50,
+    "sparking": 100,
+    "desc": "Background Fire - Cool Steady Flame"
+  },
+  {
+    "mode": "bg_fire",
+    "cooling": 70,
+    "sparking": 160,
+    "desc": "Background Fire - Hot Blaze"
+  },
+  {
+    "mode": "sparkles",
+    "sparkle_count": 2,
+    "enable_ghosting": true,
+    "ghosting_factor": 0.9,
+    "desc": "Sparkles - Slow Dying Stars"
+  },
+  {
+    "mode": "sparkles",
+    "sparkle_count": 6,
+    "enable_ghosting": true,
+    "ghosting_factor": 0.55,
+    "desc": "Sparkles - Frenzied Starfield"
+  },
+  {
+    "mode": "sparkles",
+    "sparkle_count": 4,
+    "enable_ghosting": false,
+    "ghosting_factor": 0.6,
+    "desc": "Sparkles - Sharp POP Sparks"
+  },
+  {
+    "mode": "beat_impact",
+    "gain": 1.5,
+    "desc": "Beat Impact - Oversaturated Glow"
+  },
+  {
+    "mode": "beat_impact",
+    "gain": 1.2,
+    "desc": "Beat Impact - Dynamic Glow"
+  },
+  {
+    "mode": "gravity_fountain",
+    "color_mode": 0,
+    "gravity": 0.11,
+    "bounce": 0.1,
+    "wind": -0.05,
+    "decay_rate": 0.02,
+    "max_particles": 35,
+    "enable_ghosting": true,
+    "ghosting_factor": 0.6,
+    "audio_reactive": false,
+    "desc": "Cyberpunk Rain"
+  },
+  {
+    "mode": "scan",
+    "vertical": true,
+    "speed": 0.8,
+    "desc": "Scan Vertical Wash"
+  },
+  {
+    "mode": "scan",
+    "horizontal": true,
+    "speed": 1.0,
+    "desc": "Scan Horizontal Wash"
+  },
+  {
+    "mode": "diagonal",
+    "angle": 0.7854,
+    "speed": 1.2,
+    "desc": "Diagonal 45 deg"
+  },
+  {
+    "mode": "diagonal",
+    "angle": 2.3562,
+    "speed": 1.2,
+    "desc": "Diagonal 135 deg"
+  },
+  {
+    "mode": "diagonal",
+    "angle": 3.927,
+    "speed": 1.2,
+    "desc": "Diagonal 225 deg"
+  },
+  {
+    "mode": "radar",
+    "direction": 1,
+    "speed": 2.0,
+    "desc": "High-Speed Radar"
+  },
+  {
+    "mode": "shapes",
+    "shape_type": "circle",
+    "speed": 1.5,
+    "desc": "Moving Circles"
+  },
+  {
+    "mode": "shapes",
+    "shape_type": "quadrat",
+    "speed": 1.5,
+    "desc": "Moving Squares"
+  },
+  {
+    "mode": "shapes",
+    "shape_type": "heart",
+    "ghosting": 0,
+    "speed": 2.0,
+    "audio_reactive": false,
+    "desc": "Scrolling Hearts"
+  },
+  {
+    "mode": "shapes",
+    "shape_type": "heart",
+    "ghosting": 0.3,
+    "speed": 1.5,
+    "sine_amp": 2,
+    "audio_reactive": false,
+    "desc": "Sine Hearts"
+  },
+  {
+    "mode": "wave",
+    "horizontal": true,
+    "speed": 2.0,
+    "desc": "Fast Horizontal Wave"
+  },
+  {
+    "mode": "wave",
+    "horizontal": false,
+    "speed": 2.0,
+    "desc": "Fast Vertical Wave"
+  },
+  {
+    "mode": "spiral",
+    "speed": 1.5,
+    "desc": "Helical Spiral arms"
+  },
+  {
+    "mode": "spinner",
+    "direction": 1,
+    "ghosting": 0.25,
+    "speed": 4,
+    "desc": "Rotating Spinner Arms"
+  },
+  {
+    "mode": "edge_walker",
+    "direction": -1,
+    "ghosting": 0.7,
+    "speed": 2,
+    "desc": "Edge Walker Points"
+  },
+  {
+    "mode": "crosshair",
+    "ghosting": 0.55,
+    "speed": 0.4,
+    "audio_reactive": true,
+    "desc": "Sniper Crosshair"
+  },
+  {
+    "mode": "colored_snake",
+    "num_snakes": 4,
+    "colors": "R",
+    "min_len": 8,
+    "max_len": 35,
+    "delay": 35,
+    "desc": "Snake - palette cycle"
+  },
+  {
+    "mode": "colored_snake",
+    "num_snakes": 3,
+    "colors": "RM",
+    "min_len": 10,
+    "max_len": 45,
+    "delay": 25,
+    "desc": "Snake - random colors"
+  },
+  {
+    "mode": "colored_snake",
+    "num_snakes": 5,
+    "colors": "R",
+    "min_len": 6,
+    "max_len": 25,
+    "delay": 20,
+    "directions": 1,
+    "desc": "Snake - one direction"
+  },
+  {
+    "mode": "colored_snake",
+    "num_snakes": 4,
+    "colors": "R",
+    "min_len": 12,
+    "max_len": 50,
+    "delay": 40,
+    "directions": [
+      1,
+      -1
+    ],
+    "desc": "Snake - counter-direction"
+  },
+  {
+    "mode": "orbital_dots",
+    "n_dots": 4,
+    "ring": 0,
+    "dot_mode": "dots",
+    "trail": 5,
+    "ghosting": 0.72,
+    "speed": 2.0,
+    "direction": 1,
+    "audio_reactive": true,
+    "pulse": true,
+    "desc": "Orbital 4 dots outer ring"
+  },
+  {
+    "mode": "orbital_dots",
+    "n_dots": 3,
+    "ring": 1,
+    "dot_mode": "dots",
+    "trail": 6,
+    "ghosting": 0.75,
+    "speed": 1.5,
+    "direction": 1,
+    "audio_reactive": true,
+    "pulse": true,
+    "desc": "Orbital 3 dots rows1-2 racetrack"
+  },
+  {
+    "mode": "orbital_dots",
+    "n_dots": 6,
+    "ring": 0,
+    "dot_mode": "dots",
+    "trail": 8,
+    "ghosting": 0.78,
+    "speed": 3.0,
+    "direction": -1,
+    "audio_reactive": true,
+    "pulse": true,
+    "color": "RM",
+    "desc": "Orbital 6 dots reverse random"
+  },
+  {
+    "mode": "orbital_dots",
+    "n_dots": 2,
+    "ring": 0,
+    "dot_mode": "paint",
+    "trail": 0,
+    "ghosting": 0.0,
+    "speed": 1.5,
+    "direction": 1,
+    "audio_reactive": true,
+    "pulse": true,
+    "desc": "Wiper outer ring palette"
+  },
+  {
+    "mode": "orbital_dots",
+    "n_dots": 2,
+    "ring": 1,
+    "dot_mode": "paint",
+    "trail": 0,
+    "ghosting": 0.0,
+    "speed": 1.8,
+    "direction": -1,
+    "audio_reactive": true,
+    "pulse": true,
+    "desc": "Wiper serpentine LED2 palette"
+  },
+  {
+    "mode": "mixer",
+    "sections": 8,
+    "color_p": [
+      0,
+      0,
+      255
+    ],
+    "color_s": [
+      255,
+      0,
+      0
+    ],
+    "color_t": [
+      0,
+      255,
+      0
+    ],
+    "color_mode": 3,
+    "multiplier_mode": 2,
+    "effect_mode": 3,
+    "desc": "Mixer - Random Columns Fill"
+  },
+  {
+    "mode": "mixer",
+    "sections": 12,
+    "color_p": "RM",
+    "color_s": "RM",
+    "color_mode": 3,
+    "multiplier_mode": 1,
+    "effect_mode": 1,
+    "desc": "Mixer - Palette Rows Cascade"
+  },
+  {
+    "mode": "mixer",
+    "sections": 12,
+    "color_p": "RM",
+    "color_s": [
+      0,
+      0,
+      0
+    ],
+    "color_mode": 0,
+    "multiplier_mode": 10,
+    "effect_mode": 3,
+    "desc": "Mixer - 12-Section Random Pop"
+  },
+  {
+    "mode": "mixer",
+    "sections": 18,
+    "color_mode": 1,
+    "multiplier_mode": 4,
+    "effect_mode": 1,
+    "beginning_offset": 0,
+    "delay_in": 60,
+    "delay_intermediate": 80,
+    "delay_out": 60,
+    "wait_time": 3000,
+    "desc": "Mixer - 18-Sect Sine Wave Long Hold"
+  },
+  {
+    "mode": "mixer",
+    "sections": "cols",
+    "color_mode": 2,
+    "multiplier_mode": 6,
+    "effect_mode": 2,
+    "beginning_offset": 5,
+    "delay_in": 50,
+    "delay_intermediate": 100,
+    "delay_out": 50,
+    "wait_time": 4000,
+    "desc": "Mixer - Cols-Sect Cos-Sin Alternating Long"
+  },
+  {
+    "mode": "mixer",
+    "sections": 3,
+    "color_mode": 3,
+    "multiplier_mode": 5,
+    "effect_mode": 3,
+    "beginning_offset": 12,
+    "delay_in": 45,
+    "delay_intermediate": 70,
+    "delay_out": 45,
+    "wait_time": 5100,
+    "desc": "Mixer - 3-Sect Three-Color Center-Out Breathe"
+  },
+  {
+    "mode": "mixer",
+    "sections": 4,
+    "color_mode": 5,
+    "multiplier_mode": 3,
+    "effect_mode": 2,
+    "beginning_offset": 20,
+    "delay_in": 55,
+    "delay_intermediate": 90,
+    "delay_out": 55,
+    "wait_time": 4500,
+    "desc": "Mixer - 4-Sect Blend Abs-Sine Alternating"
+  },
+  {
+    "mode": "mixer",
+    "sections": 12,
+    "color_mode": 6,
+    "multiplier_mode": 4,
+    "effect_mode": 3,
+    "beginning_offset": 8,
+    "delay_in": 40,
+    "delay_intermediate": 150,
+    "delay_out": 40,
+    "wait_time": 3000,
+    "desc": "Mixer - 12-Sect Palette-Add Sine Center-Out"
+  },
+  {
+    "mode": "mixer",
+    "sections": 8,
+    "color_mode": 4,
+    "multiplier_mode": 6,
+    "effect_mode": 1,
+    "beginning_offset": 15,
+    "delay_in": 30,
+    "delay_intermediate": 60,
+    "delay_out": 30,
+    "wait_time": 2500,
+    "desc": "Mixer - 8-Sect Custom Offset Cos-Sin Wave"
+  },
+  {
+    "mode": "mixer",
+    "sections": 6,
+    "color_mode": 2,
+    "multiplier_mode": 5,
+    "effect_mode": 2,
+    "beginning_offset": 0,
+    "delay_in": 50,
+    "delay_intermediate": 50,
+    "delay_out": 1000,
+    "wait_time": 1000,
+    "desc": "Mixer - 6-Sect Alternating Breathing Max Long"
+  },
+  {
+    "mode": "analog_clock",
+    "show_marks": true,
+    "target_brightness": 63,
+    "auto_brightness": true,
+    "desc": "Analog Sweeping Clock"
+  },
+  {
+    "mode": "spiral_audio",
+    "rotation_speed": 4.0,
+    "arms": 4,
+    "enable_ghosting": true,
+    "ghosting_factor": 0.62,
+    "desc": "Four-Arm Audio Spiral"
+  },
+  {
+    "mode": "magdalenas_lights",
+    "pause_time": 100,
+    "wait_time": 1500,
+    "color_p": "R",
+    "desc": "Magdalena's Lights - Slowly Fading Trails"
+  },
+  {
+    "mode": "auto",
+    "desc": "Auto Audio Effect Selection"
+  },
+  {
+    "mode": "presence_bloom",
+    "desc": "Presence Band Bloom"
+  },
+  {
+    "mode": "quantum_rift",
+    "desc": "WOW: Quantum Rift Spiral"
+  },
+  {
+    "mode": "tunnel",
+    "desc": "3D Flythrough Audio Tunnel"
+  },
+  {
+    "mode": "mixer",
+    "sections": 3,
+    "color_mode": 1,
+    "multiplier_mode": 1,
+    "effect_mode": 1,
+    "beginning_offset": 0,
+    "delay_in": 25,
+    "delay_intermediate": 25,
+    "delay_out": 25,
+    "wait_time": 800,
+    "desc": "Mixer - Tri-Section Direct Flow"
+  },
+  {
+    "mode": "mixer",
+    "sections": 2,
+    "color_mode": 3,
+    "multiplier_mode": 0,
+    "effect_mode": 1,
+    "beginning_offset": 5,
+    "delay_in": 20,
+    "delay_intermediate": 45,
+    "delay_out": 20,
+    "wait_time": 500,
+    "desc": "Mixer - Dual Color Chase"
+  },
+  {
+    "mode": "mixer",
+    "sections": 5,
+    "color_mode": 5,
+    "multiplier_mode": 2,
+    "effect_mode": 3,
+    "beginning_offset": 0,
+    "delay_in": 35,
+    "delay_intermediate": 30,
+    "delay_out": 35,
+    "wait_time": 1200,
+    "desc": "Mixer - Penta Blended Linear"
+  },
+  {
+    "mode": "presence_bloom",
+    "bloom_range": 5,
+    "desc": "Presence Bloom - Concentrated Spot"
+  },
+  {
+    "mode": "presence_bloom",
+    "bloom_range": 12,
+    "desc": "Presence Bloom - Medium Halo"
+  },
+  {
+    "mode": "presence_bloom",
+    "bloom_range": 22,
+    "desc": "Presence Bloom - Wide Aura"
+  },
+  {
+    "mode": "diagonal",
+    "angle": 5.4978,
+    "direction": 1,
+    "ghosting": 0.6,
+    "speed": 1.2,
+    "desc": "Diagonal 315 deg (Sweep Right)"
+  },
+  {
+    "mode": "wave",
+    "horizontal": false,
+    "speed": 0.5,
+    "ghosting": 0.8,
+    "desc": "Wave - Slow Vertical Sine"
+  },
+  {
+    "mode": "wave",
+    "horizontal": true,
+    "speed": 1.5,
+    "ghosting": 0.55,
+    "desc": "Wave - Fast Horizontal Sine"
+  },
+  {
+    "mode": "radar",
+    "direction": 1,
+    "speed": 0.4,
+    "ghosting": 0.85,
+    "desc": "Radar - Slow Sweeping"
+  },
+  {
+    "mode": "radar",
+    "direction": -1,
+    "speed": 1.5,
+    "ghosting": 0.55,
+    "desc": "Radar - Fast Reverse Sweep"
+  },
+  {
+    "mode": "radar",
+    "direction": 1,
+    "speed": 2.5,
+    "ghosting": 0.35,
+    "desc": "Radar - Hyper-Speed Forward"
+  },
+  {
+    "mode": "spinner",
+    "direction": 1,
+    "ghosting": 0.7,
+    "speed": 1.0,
+    "desc": "Spinner - Slow Arm Sweep"
+  },
+  {
+    "mode": "spinner",
+    "direction": -1,
+    "ghosting": 0.2,
+    "speed": 5.0,
+    "desc": "Spinner - Fast Reverse Arms"
+  },
+  {
+    "mode": "spinner",
+    "direction": 1,
+    "ghosting": 0.85,
+    "speed": 2.0,
+    "desc": "Spinner - Comet-Trail Arms"
+  },
+  {
+    "mode": "crosshair",
+    "ghosting": 0.3,
+    "speed": 0.9,
+    "audio_reactive": true,
+    "desc": "Crosshair - Tactical Reactive"
+  },
+  {
+    "mode": "crosshair",
+    "ghosting": 0.7,
+    "speed": 0.2,
+    "audio_reactive": false,
+    "desc": "Crosshair - Slow Scanner"
+  },
+  {
+    "mode": "crosshair",
+    "ghosting": 0.5,
+    "speed": 1.6,
+    "audio_reactive": true,
+    "desc": "Crosshair - Frenzied Tracker"
+  },
+  {
+    "mode": "analog_clock",
+    "show_marks": true,
+    "target_brightness": 64,
+    "auto_brightness": false,
+    "desc": "Clock - Medium Constant Brightness"
+  },
+  {
+    "mode": "analog_clock",
+    "show_marks": false,
+    "target_brightness": 32,
+    "auto_brightness": false,
+    "desc": "Clock - Minimalist Dim Display"
+  },
+  {
+    "mode": "analog_clock",
+    "show_marks": true,
+    "target_brightness": 128,
+    "auto_brightness": true,
+    "desc": "Clock - Auto-Dim with Marks"
+  },
+  {
+    "mode": "spiral",
+    "speed": 0.5,
+    "ghosting": 0.85,
+    "desc": "Spiral - Slow Cosmic Drift"
+  },
+  {
+    "mode": "spiral",
+    "speed": 1.8,
+    "ghosting": 0.6,
+    "desc": "Spiral - Medium Galaxy Arms"
+  },
+  {
+    "mode": "spiral",
+    "speed": 3.0,
+    "ghosting": 0.4,
+    "desc": "Spiral - Fast Vortex Spin"
+  },
+  {
+    "mode": "edge_walker",
+    "direction": 1,
+    "ghosting": 0.8,
+    "speed": 0.8,
+    "desc": "Edge Walker - Slow Crawler"
+  },
+  {
+    "mode": "edge_walker",
+    "direction": -1,
+    "ghosting": 0.35,
+    "speed": 4.0,
+    "desc": "Edge Walker - Fast Sprinter"
+  },
+  {
+    "mode": "edge_walker",
+    "direction": 1,
+    "ghosting": 0.6,
+    "speed": 2.5,
+    "desc": "Edge Walker - Mid-Speed Stroll"
+  },
+  {
+    "mode": "auto",
+    "speed": 0.5,
+    "desc": "Auto - Slow Scene Changes"
+  },
+  {
+    "mode": "auto",
+    "speed": 1.5,
+    "desc": "Auto - Medium Scene Changes"
+  },
+  {
+    "mode": "auto",
+    "speed": 2.5,
+    "desc": "Auto - Rapid Scene Shuffler"
+  },
+  {
+    "mode": "tunnel",
+    "speed": 0.4,
+    "desc": "Tunnel - Slow Cruise"
+  },
+  {
+    "mode": "tunnel",
+    "speed": 1.2,
+    "desc": "Tunnel - Warp Drive"
+  },
+  {
+    "mode": "tunnel",
+    "speed": 2.5,
+    "desc": "Tunnel - Terminal Velocity"
+  },
+  {
+    "mode": "magdalenas_lights",
+    "pause_time": 500,
+    "wait_time": 200,
+    "color_p": [
+      255,
+      0,
+      100
+    ],
+    "desc": "Magdalenas - Slow Magenta Trails"
+  },
+  {
+    "mode": "magdalenas_lights",
+    "pause_time": 200,
+    "wait_time": 80,
+    "color_p": [
+      0,
+      255,
+      200
+    ],
+    "desc": "Magdalenas - Fast Mint Trails"
+  },
+  {
+    "mode": "magdalenas_lights",
+    "pause_time": 800,
+    "wait_time": 300,
+    "color_p": [
+      255,
+      255,
+      255
+    ],
+    "desc": "Magdalenas - Delayed White Trails"
+  },
+  {
+    "mode": "spiral_audio",
+    "rotation_speed": 1.5,
+    "arms": 2,
+    "enable_ghosting": true,
+    "ghosting_factor": 0.8,
+    "desc": "Spiral Audio - Twin Arms Slow"
+  },
+  {
+    "mode": "spiral_audio",
+    "rotation_speed": 5.0,
+    "arms": 6,
+    "enable_ghosting": true,
+    "ghosting_factor": 0.45,
+    "desc": "Spiral Audio - Hexa Arms Fury"
+  },
+  {
+    "mode": "spiral_audio",
+    "rotation_speed": 3.0,
+    "arms": 3,
+    "enable_ghosting": true,
+    "ghosting_factor": 0.65,
+    "desc": "Spiral Audio - Triple Arms Mid"
+  },
+  {
+    "mode": "scan",
+    "vertical": true,
+    "direction": 1,
+    "ghosting": 0.6,
+    "speed": 0.8,
+    "desc": "Scan - Slow Vertical Wash"
+  },
+  {
+    "mode": "scan",
+    "vertical": false,
+    "direction": -1,
+    "ghosting": 0.5,
+    "speed": 1.5,
+    "desc": "Scan - Fast Horizontal Wash"
+  },
+  {
+    "mode": "gravity_fountain",
+    "color_mode": 1,
+    "gravity": 0.15,
+    "bounce": 0.4,
+    "wind": 0.0,
+    "decay_rate": 0.02,
+    "max_particles": 45,
+    "enable_ghosting": false,
+    "audio_reactive": false,
+    "desc": "Volcanic Eruption"
+  },
+  {
+    "mode": "gravity_fountain",
+    "color_mode": 2,
+    "gravity": 0.08,
+    "bounce": 0.7,
+    "wind": 0.15,
+    "decay_rate": 0.015,
+    "max_particles": 40,
+    "enable_ghosting": true,
+    "ghosting_factor": 0.7,
+    "audio_reactive": true,
+    "desc": "Toxic Storm"
+  }
+]

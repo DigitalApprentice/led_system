@@ -1,0 +1,1838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CLeds System Dashboard</title>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#1F2833">
+  <link rel="apple-touch-icon" href="/icon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0b0c10;
+      --bg-card: rgba(31, 40, 51, 0.45);
+      --border-glow: rgba(0, 242, 254, 0.15);
+      --text-main: #c5c6c7;
+      --text-bright: #ffffff;
+      --primary: #00f2fe;
+      --secondary: #4facfe;
+      --accent: #ff007f;
+      --favorite: #ffc107;
+      --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Outfit', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background: radial-gradient(circle at 50% 50%, #1f2833 0%, var(--bg-dark) 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* Scrollbars */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-dark);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1f2833;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--secondary);
+    }
+
+    header {
+      background: rgba(11, 12, 16, 0.85);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-container svg {
+      width: 32px;
+      height: 32px;
+      filter: drop-shadow(0 0 5px var(--primary));
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: 1px;
+    }
+
+    .header-time {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--text-bright);
+      background: rgba(255, 255, 255, 0.05);
+      padding: 6px 12px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      letter-spacing: 0.5px;
+    }
+
+    main {
+      flex: 1;
+      padding: 20px;
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .nav-tabs {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      background: rgba(11, 12, 16, 0.6);
+      border-radius: 30px;
+      padding: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .tab-btn {
+      background: none;
+      border: none;
+      color: var(--text-main);
+      padding: 12px 6px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      border-radius: 25px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .tab-btn svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: var(--bg-dark);
+      box-shadow: 0 4px 15px rgba(0, 242, 254, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.4s ease-out;
+    }
+
+    .tab-content.active {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card {
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      border: 1px solid var(--border-glow);
+      box-shadow: var(--shadow);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      transition: border-color 0.3s;
+    }
+
+    .card:hover {
+      border-color: rgba(0, 242, 254, 0.3);
+    }
+
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--text-bright);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      padding-bottom: 10px;
+    }
+
+    .card-title-icon {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-title svg {
+      width: 22px;
+      height: 22px;
+      fill: var(--primary);
+    }
+
+    /* Grid Layouts */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+    }
+
+    @media (min-width: 768px) {
+      .grid-4 {
+        grid-template-columns: repeat(4, 1fr);
+      }
+      .tab-btn {
+        flex-direction: row;
+        justify-content: center;
+        padding: 12px 20px;
+        gap: 8px;
+      }
+      .widget {
+        flex-direction: row;
+        align-items: center;
+        padding: 15px;
+        gap: 15px;
+      }
+    }
+
+    /* Telemetry widgets */
+    .widget {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-radius: 15px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .widget-icon {
+      background: rgba(0, 242, 254, 0.1);
+      border-radius: 12px;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .widget-icon svg {
+      width: 24px;
+      height: 24px;
+      fill: var(--primary);
+    }
+
+    .widget-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .widget-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #8892b0;
+    }
+
+    .widget-value {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--text-bright);
+    }
+
+    /* Controls styling */
+    .btn-group {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-main);
+      padding: 10px 15px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
+
+    .btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.2);
+      color: var(--text-bright);
+    }
+
+    .btn.active {
+      background: rgba(0, 242, 254, 0.15);
+      border-color: var(--primary);
+      color: var(--primary);
+      box-shadow: 0 0 10px rgba(0, 242, 254, 0.2);
+    }
+
+    .btn.active-accent {
+      background: rgba(255, 0, 127, 0.15);
+      border-color: var(--accent);
+      color: var(--accent);
+      box-shadow: 0 0 10px rgba(255, 0, 127, 0.2);
+    }
+
+    .btn-fav {
+      flex: 0 0 auto;
+      width: 44px;
+    }
+
+    .btn-fav.active {
+      color: var(--favorite);
+      border-color: var(--favorite);
+      background: rgba(255, 193, 7, 0.15);
+      box-shadow: 0 0 10px rgba(255, 193, 7, 0.2);
+    }
+
+    .fav-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 5px;
+    }
+
+    .fav-pill {
+      background: rgba(255, 193, 7, 0.08);
+      border: 1px solid rgba(255, 193, 7, 0.2);
+      color: var(--text-main);
+      padding: 6px 14px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .fav-pill:hover {
+      background: rgba(255, 193, 7, 0.15);
+      border-color: var(--favorite);
+      color: var(--text-bright);
+    }
+
+    .fav-pill.active {
+      background: rgba(255, 193, 7, 0.25);
+      border-color: var(--favorite);
+      color: var(--favorite);
+      box-shadow: 0 0 10px rgba(255, 193, 7, 0.3);
+    }
+
+    .slider-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+    }
+
+    .btn-step {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-bright);
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      font-weight: bold;
+      transition: all 0.2s;
+      flex-shrink: 0;
+      user-select: none;
+    }
+
+    .btn-step:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: var(--primary);
+      box-shadow: 0 0 8px rgba(0, 242, 254, 0.3);
+    }
+
+    .btn-step:active {
+      transform: scale(0.9);
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-group label {
+      font-size: 0.85rem;
+      color: #8892b0;
+      font-weight: 600;
+      min-height: 2.2em;
+      display: flex;
+      align-items: flex-end;
+      padding-bottom: 2px;
+    }
+
+    select, input[type="text"], input[type="number"] {
+      width: 100%;
+      background: rgba(11, 12, 16, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-bright);
+      padding: 12px;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      outline: none;
+      transition: all 0.3s;
+    }
+
+    select:focus, input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 8px rgba(0, 242, 254, 0.25);
+    }
+
+    /* Slider Container */
+    .slider-container {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      padding: 12px;
+      border-radius: 12px;
+    }
+
+    .slider-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      color: var(--text-main);
+      font-weight: 600;
+    }
+
+    .slider-header span.val {
+      color: var(--primary);
+      font-weight: 800;
+    }
+
+    input[type="range"] {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 6px;
+      border-radius: 3px;
+      background: rgba(255, 255, 255, 0.1);
+      outline: none;
+      cursor: pointer;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      box-shadow: 0 0 8px var(--primary);
+      transition: transform 0.1s;
+    }
+
+    input[type="range"]::-webkit-slider-thumb:hover {
+      transform: scale(1.2);
+    }
+
+    /* Toggle Switches */
+    .toggle-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 0;
+    }
+
+    .toggle-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .toggle-label {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-bright);
+    }
+
+    .toggle-desc {
+      font-size: 0.75rem;
+      color: #8892b0;
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 52px;
+      height: 28px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(255, 255, 255, 0.1);
+      transition: .3s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: 34px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 20px;
+      width: 20px;
+      left: 3px;
+      bottom: 3px;
+      background-color: var(--text-main);
+      transition: .3s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: 50%;
+    }
+
+    input:checked + .slider {
+      background-color: rgba(0, 242, 254, 0.15);
+      border-color: var(--primary);
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(24px);
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      box-shadow: 0 0 6px var(--primary);
+    }
+
+    .weather-forecast {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      padding: 15px;
+      border-radius: 15px;
+    }
+
+    .weather-item {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .weather-item-label {
+      font-size: 0.75rem;
+      color: #8892b0;
+      text-transform: uppercase;
+    }
+
+    .weather-item-value {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text-bright);
+    }
+
+    .weather-desc {
+      grid-column: span 2;
+      text-align: center;
+      padding: 6px;
+      background: rgba(0, 242, 254, 0.05);
+      border-radius: 8px;
+      font-weight: 600;
+      color: var(--primary);
+      text-transform: uppercase;
+      font-size: 0.85rem;
+    }
+
+    /* PWA Install banner */
+    #install-banner {
+      display: none;
+      background: linear-gradient(90deg, rgba(0, 242, 254, 0.2), rgba(79, 172, 254, 0.2));
+      border: 1px solid var(--primary);
+      border-radius: 15px;
+      padding: 15px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    #install-banner p {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-bright);
+    }
+
+    #install-banner button {
+      background: var(--text-bright);
+      color: var(--bg-dark);
+      border: none;
+      padding: 8px 16px;
+      font-weight: 800;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+
+    .ip-config-fields {
+      display: none;
+      flex-direction: column;
+      gap: 12px;
+      background: rgba(255, 255, 255, 0.02);
+      padding: 15px;
+      border-radius: 15px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      margin-top: 10px;
+    }
+
+    .ip-config-fields.visible {
+      display: flex;
+    }
+
+    .pulse-indicator {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      background-color: #2ec4b6;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #2ec4b6;
+      margin-right: 8px;
+      animation: pulse 1.8s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(0.9); opacity: 0.6; }
+      50% { transform: scale(1.1); opacity: 1; box-shadow: 0 0 14px #2ec4b6; }
+      100% { transform: scale(0.9); opacity: 0.6; }
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: rgba(11, 12, 16, 0.95);
+      border: 1px solid var(--primary);
+      color: var(--text-bright);
+      padding: 12px 24px;
+      border-radius: 25px;
+      font-weight: 600;
+      z-index: 1000;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo-container">
+      <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="128" cy="128" r="48" fill="#ff007f"/>
+        <circle cx="256" cy="128" r="40" fill="#00f2fe" opacity="0.8"/>
+        <circle cx="384" cy="128" r="48" fill="#7f00ff"/>
+        <circle cx="128" cy="256" r="40" fill="#00f2fe" opacity="0.8"/>
+        <circle cx="256" cy="256" r="56" fill="#ff007f"/>
+        <circle cx="384" cy="256" r="40" fill="#ffff00"/>
+        <circle cx="128" cy="384" r="48" fill="#7f00ff"/>
+        <circle cx="256" cy="384" r="40" fill="#ffff00" opacity="0.8"/>
+        <circle cx="384" cy="384" r="56" fill="#00f2fe"/>
+      </svg>
+      <h1>CLeds Controller</h1>
+    </div>
+    <div class="header-time" id="header-time">00:00:00</div>
+  </header>
+
+  <main>
+    <!-- PWA Installation Banner -->
+    <div id="install-banner">
+      <p>Add CLeds Dashboard to your Home Screen</p>
+      <button id="install-btn">Install</button>
+    </div>
+
+    <!-- Nav Tabs -->
+    <nav class="nav-tabs">
+      <button class="tab-btn active" onclick="switchTab('dashboard')">
+        <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+        Dashboard
+      </button>
+      <button class="tab-btn" onclick="switchTab('led1')">
+        <svg viewBox="0 0 24 24"><path d="M19 13H5v-2h14v2z M12 5a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg>
+        LED 1
+      </button>
+      <button class="tab-btn" onclick="switchTab('led2')">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.25z"/></svg>
+        LED 2
+      </button>
+      <button class="tab-btn" onclick="switchTab('settings')">
+        <svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+        Settings
+      </button>
+    </nav>
+
+    <!-- Tab Content: Dashboard -->
+    <section id="dashboard-tab" class="tab-content active">
+      <!-- Realtime Sensors -->
+      <div class="card">
+        <div class="card-title">
+          <div class="card-title-icon">
+            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+            Sensor Telemetry (Inside)
+          </div>
+          <span style="font-size:0.8rem; opacity:0.6;"><span class="pulse-indicator"></span>Live</span>
+        </div>
+        <div class="grid-4">
+          <div class="widget">
+            <div class="widget-icon">
+              <svg viewBox="0 0 24 24"><path d="M15 13V5c0-1.66-1.34-3-3-3S9 3.34 9 5v8c-1.21.91-2 2.37-2 4 0 2.76 2.24 5 5 5s5-2.24 5-5c0-1.63-.79-3.09-2-4zm-3-9c.55 0 1 .45 1 1v3h-2V5c0-.55.45-1 1-1z"/></svg>
+            </div>
+            <div class="widget-info">
+              <span class="widget-label">Temperature</span>
+              <span class="widget-value" id="sens-temp">--.- °C</span>
+            </div>
+          </div>
+          <div class="widget">
+            <div class="widget-icon">
+              <svg viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+            </div>
+            <div class="widget-info">
+              <span class="widget-label">Humidity</span>
+              <span class="widget-value" id="sens-hum">--.- %</span>
+            </div>
+          </div>
+          <div class="widget">
+            <div class="widget-icon">
+              <svg viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"/></svg>
+            </div>
+            <div class="widget-info">
+              <span class="widget-label">Pressure</span>
+              <span class="widget-value" id="sens-pres">---- hPa</span>
+            </div>
+          </div>
+          <div class="widget">
+            <div class="widget-icon">
+              <svg viewBox="0 0 24 24"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1z"/></svg>
+            </div>
+            <div class="widget-info">
+              <span class="widget-label">Light (Lux)</span>
+              <span class="widget-value" id="sens-lux">--- lx</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- OpenWeatherMap Telemetry -->
+      <div class="card">
+        <div class="card-title">
+          <div class="card-title-icon">
+            <svg viewBox="0 0 24 24"><path d="M6.76 4.84l-1.8-1.79-1.41 1.41 1.79 1.8zM4 10.5H1v2h3zm9-9h-2v3h2zm7.45 3.91l-1.41-1.41-1.79 1.79 1.8 1.79zM20 10.5h3v2h-3zm-8 2c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5zm0-7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5z"/></svg>
+            Outdoor Weather (OpenWeather)
+          </div>
+          <span id="weather-sync-time" style="font-size:0.8rem; opacity:0.6;">Not synced</span>
+        </div>
+        <div class="weather-forecast">
+          <div class="weather-desc" id="weather-desc">No Data</div>
+          <div class="weather-item">
+            <span class="weather-item-label">Temp</span>
+            <span class="weather-item-value" id="weather-temp">--.- °C</span>
+          </div>
+          <div class="weather-item">
+            <span class="weather-item-label">Feels Like</span>
+            <span class="weather-item-value" id="weather-feels">--.- °C</span>
+          </div>
+          <div class="weather-item">
+            <span class="weather-item-label">Humidity</span>
+            <span class="weather-item-value" id="weather-hum">-- %</span>
+          </div>
+          <div class="weather-item">
+            <span class="weather-item-label">Pressure</span>
+            <span class="weather-item-value" id="weather-pres">---- hPa</span>
+          </div>
+          <div class="weather-item">
+            <span class="weather-item-label">Wind</span>
+            <span class="weather-item-value" id="weather-wind">-- KM/H</span>
+          </div>
+          <div class="weather-item">
+            <span class="weather-item-label">Sun Rise/Set</span>
+            <span class="weather-item-value" id="weather-sun">--:-- / --:--</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tab Content: LED 1 -->
+    <section id="led1-tab" class="tab-content">
+      <div class="card">
+        <div class="card-title">
+          <div class="card-title-icon">
+            <svg viewBox="0 0 24 24"><path d="M19 13H5v-2h14v2z M12 5a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg>
+            LED Grid 1 (19x19 Matrix)
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Mode / Power</label>
+          <div class="btn-group">
+            <button class="btn" id="led1-mode-off" onclick="setMode(1, 'OFF')">OFF</button>
+            <button class="btn" id="led1-mode-time" onclick="setMode(1, 'TIME')">CLOCK</button>
+            <button class="btn" id="led1-mode-effects" onclick="setMode(1, 'EFFECTS')">EFFECTS</button>
+          </div>
+        </div>
+
+        <div class="form-group" id="led1-favorites-container" style="display:none;">
+          <label>⭐ Quick Favorites</label>
+          <div class="fav-pills" id="led1-fav-pills"></div>
+        </div>
+
+        <div class="form-group">
+          <label>Select Effect Scenario</label>
+          <div style="display:flex; gap:8px; margin-bottom:8px;">
+            <input type="text" id="led1-search" placeholder="🔍 Search effects..." oninput="filterEffects(1)" style="flex:1; padding:8px 12px; font-size:0.85rem; border-radius:8px; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.08); color:var(--text-bright); outline:none;">
+            <select id="led1-category-filter" onchange="filterEffects(1)" style="width:130px; padding:8px 12px; font-size:0.85rem; border-radius:8px; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.08); color:var(--text-bright); outline:none;">
+              <option value="">All Groups</option>
+              <option value="bars">Bars</option>
+              <option value="color">Color</option>
+              <option value="gravity">Gravity</option>
+              <option value="spark">Spark</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div style="display:flex; gap:10px;">
+            <select id="led1-effect-select" onchange="selectEffect(1, this.value)">
+              <option value="">Loading scenarios...</option>
+            </select>
+            <button class="btn btn-fav" id="led1-fav-btn" onclick="toggleFavorite(1)">
+              <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="slider-container">
+          <div class="slider-header">
+            <span>Strip Brightness</span>
+            <span class="val" id="led1-bright-val">255</span>
+          </div>
+          <div class="slider-wrapper">
+            <button class="btn-step" onclick="adjustBrightnessBtn(1, -1)">-</button>
+            <input type="range" id="led1-bright-slider" min="0" max="255" value="255" oninput="changeBrightness(1, this.value)">
+            <button class="btn-step" onclick="adjustBrightnessBtn(1, 1)">+</button>
+          </div>
+        </div>
+
+        <!-- Dynamic Parameter Fields Go Here -->
+        <div id="led1-params-container" style="display:flex; flex-direction:column; gap:12px;">
+          <!-- JS generated inputs -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Tab Content: LED 2 -->
+    <section id="led2-tab" class="tab-content">
+      <div class="card">
+        <div class="card-title">
+          <div class="card-title-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.25z"/></svg>
+            LED Grid 2 (138x4 Matrix)
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Mode / Power</label>
+          <div class="btn-group">
+            <button class="btn" id="led2-mode-off" onclick="setMode(2, 'OFF')">OFF</button>
+            <button class="btn" id="led2-mode-time" onclick="setMode(2, 'TIME')">CLOCK</button>
+            <button class="btn" id="led2-mode-effects" onclick="setMode(2, 'EFFECTS')">EFFECTS</button>
+          </div>
+        </div>
+
+        <div class="form-group id-led2-time-sub" style="display:none;">
+          <label>Clock Variant / Overlay</label>
+          <div class="btn-group">
+            <button class="btn" id="led2-sub-time" onclick="setTimeSub('TIME_ONLY')">Clock Only</button>
+            <button class="btn" id="led2-sub-custom" onclick="setTimeSub('CUSTOM')">Sensors Only</button>
+            <button class="btn" id="led2-sub-both" onclick="setTimeSub('TIME_CUSTOM')">Clock + Sens</button>
+          </div>
+        </div>
+
+        <div class="form-group" id="led2-favorites-container" style="display:none;">
+          <label>⭐ Quick Favorites</label>
+          <div class="fav-pills" id="led2-fav-pills"></div>
+        </div>
+
+        <div class="form-group">
+          <label>Select Effect Scenario</label>
+          <div style="display:flex; gap:8px; margin-bottom:8px;">
+            <input type="text" id="led2-search" placeholder="🔍 Search effects..." oninput="filterEffects(2)" style="flex:1; padding:8px 12px; font-size:0.85rem; border-radius:8px; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.08); color:var(--text-bright); outline:none;">
+            <select id="led2-category-filter" onchange="filterEffects(2)" style="width:130px; padding:8px 12px; font-size:0.85rem; border-radius:8px; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.08); color:var(--text-bright); outline:none;">
+              <option value="">All Groups</option>
+              <option value="bars">Bars</option>
+              <option value="color">Color</option>
+              <option value="gravity">Gravity</option>
+              <option value="spark">Spark</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div style="display:flex; gap:10px;">
+            <select id="led2-effect-select" onchange="selectEffect(2, this.value)">
+              <option value="">Loading scenarios...</option>
+            </select>
+            <button class="btn btn-fav" id="led2-fav-btn" onclick="toggleFavorite(2)">
+              <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="slider-container">
+          <div class="slider-header">
+            <span>Strip Brightness</span>
+            <span class="val" id="led2-bright-val">255</span>
+          </div>
+          <div class="slider-wrapper">
+            <button class="btn-step" onclick="adjustBrightnessBtn(2, -1)">-</button>
+            <input type="range" id="led2-bright-slider" min="0" max="255" value="255" oninput="changeBrightness(2, this.value)">
+            <button class="btn-step" onclick="adjustBrightnessBtn(2, 1)">+</button>
+          </div>
+        </div>
+
+        <!-- Dynamic Parameter Fields Go Here -->
+        <div id="led2-params-container" style="display:flex; flex-direction:column; gap:12px;">
+          <!-- JS generated inputs -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Tab Content: Settings -->
+    <section id="settings-tab" class="tab-content">
+      <!-- Auto Advance Settings -->
+      <div class="card">
+        <div class="card-title">
+          <div class="card-title-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>
+            Auto Advance & Beat Sync
+          </div>
+        </div>
+
+        <div class="toggle-container">
+          <div class="toggle-info">
+            <span class="toggle-label">Auto Advance Effects</span>
+            <span class="toggle-desc">Automatically cycles visual scenarios</span>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="sett-auto-enable" onchange="toggleAutoEnable(this.checked)">
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="slider-container">
+          <div class="slider-header">
+            <span>Advance Interval</span>
+            <span class="val" id="sett-auto-interval-val">15 s</span>
+          </div>
+          <input type="range" id="sett-auto-interval-slider" min="5" max="60" value="15" step="5" oninput="changeAutoInterval(this.value)">
+        </div>
+
+        <div class="toggle-container">
+          <div class="toggle-info">
+            <span class="toggle-label">Beat Sync Auto Change</span>
+            <span class="toggle-desc">Switch scenario on audio beat triggers</span>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="sett-beat-sync" onchange="toggleBeatSync(this.checked)">
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Network Settings -->
+      <div class="card">
+        <div class="card-title">
+          <div class="card-title-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+            System Sync & Location
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label>NTP Time Server</label>
+            <input type="text" id="sett-ntp-server" placeholder="pool.ntp.org">
+          </div>
+          <div class="form-group">
+            <label>Timezone Offset (hours)</label>
+            <input type="number" id="sett-timezone" min="-12" max="14" step="1">
+          </div>
+        </div>
+
+        <div class="toggle-container">
+          <div class="toggle-info">
+            <span class="toggle-label">Daylight Saving Time (DST)</span>
+            <span class="toggle-desc">Manually shift clock by +1 hour</span>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="sett-dst">
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label>Latitude (Astro-Dimming)</label>
+            <input type="number" id="sett-lat" step="0.00001">
+          </div>
+          <div class="form-group">
+            <label>Longitude (Astro-Dimming)</label>
+            <input type="number" id="sett-lon" step="0.00001">
+          </div>
+        </div>
+
+        <div class="toggle-container">
+          <div class="toggle-info">
+            <span class="toggle-label">Active Buzzer sound</span>
+            <span class="toggle-desc">Plays acoustic beep alerts on remote clicks</span>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="sett-buzzer">
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="toggle-container">
+          <div class="toggle-info">
+            <span class="toggle-label">Status Messages Overlay</span>
+            <span class="toggle-desc">Show changing effect and volume status on matrix</span>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="sett-status-messages">
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Static IP Config -->
+      <div class="card">
+        <div class="card-title">
+          <div class="card-title-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+            Static IP Configuration
+          </div>
+        </div>
+
+        <div class="toggle-container">
+          <div class="toggle-info">
+            <span class="toggle-label">Enable Static IP Address</span>
+            <span class="toggle-desc">Assigns a fixed IP on boot (needs restart)</span>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="sett-static-enable" onchange="toggleStaticFields(this.checked)">
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="ip-config-fields" id="ip-config-fields">
+          <div class="form-group">
+            <label>Static IP Address</label>
+            <input type="text" id="sett-static-ip" placeholder="192.168.101.150" pattern="^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$">
+          </div>
+          <div class="form-group">
+            <label>Subnet Mask</label>
+            <input type="text" id="sett-static-subnet" placeholder="255.255.255.0">
+          </div>
+          <div class="form-group">
+            <label>Gateway</label>
+            <input type="text" id="sett-static-gateway" placeholder="192.168.101.1">
+          </div>
+          <div class="form-group">
+            <label>DNS Server</label>
+            <input type="text" id="sett-static-dns" placeholder="8.8.8.8">
+          </div>
+        </div>
+
+        <button class="btn active" style="margin-top:10px; padding:14px; font-size:1rem;" onclick="saveSystemSettings()">
+          <svg viewBox="0 0 24 24"><path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/></svg>
+          Save Settings
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast">Settings Saved Successfully</div>
+
+  <script>
+    let catalog = [];
+    let state = {};
+    let activeTab = 'dashboard';
+    let deferredPrompt = null;
+    let updatingSliders = {};
+    let lastRenderedEffect = { 1: -1, 2: -1 };
+
+    // Throttle utility
+    function throttle(func, limit) {
+      let inThrottle;
+      return function() {
+        const args = arguments;
+        const context = this;
+        if (!inThrottle) {
+          func.apply(context, args);
+          inThrottle = true;
+          setTimeout(() => inThrottle = false, limit);
+        }
+      }
+    }
+
+    // Dynamic UI Toast
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.innerText = message;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2500);
+    }
+
+    // Switch between tabs
+    function switchTab(tabId) {
+      activeTab = tabId;
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+      
+      // Find matching button
+      const buttonIndex = {'dashboard': 0, 'led1': 1, 'led2': 2, 'settings': 3}[tabId];
+      document.querySelectorAll('.tab-btn')[buttonIndex].classList.add('active');
+      document.getElementById(`${tabId}-tab`).classList.add('active');
+      
+      if (tabId === 'settings' && state.global && state.global.settings) {
+        populateSettingsFields(state.global.settings);
+      }
+    }
+
+    // Toggle static IP fields visibility
+    function toggleStaticFields(visible) {
+      const fields = document.getElementById('ip-config-fields');
+      if (visible) {
+        fields.classList.add('visible');
+      } else {
+        fields.classList.remove('visible');
+      }
+    }
+
+    // Fetch catalog configuration
+    async function loadCatalog() {
+      try {
+        const res = await fetch('/api/catalog');
+        catalog = await res.json();
+        // Sort alphabetically by name
+        catalog.sort((a, b) => a.name.localeCompare(b.name));
+        populateSelects();
+      } catch (e) {
+        console.error("Failed to load catalog:", e);
+      }
+    }
+
+    // Populate dropdowns with categories
+    function populateSelects() {
+      filterEffects(1);
+      filterEffects(2);
+    }
+
+    function filterEffects(ledNum) {
+      const search = document.getElementById(`led${ledNum}-search`).value.toLowerCase();
+      const cat = document.getElementById(`led${ledNum}-category-filter`).value;
+      const select = document.getElementById(`led${ledNum}-effect-select`);
+      const currentValue = select.value;
+      
+      select.innerHTML = '';
+      
+      const categories = {
+        'bars': 'Equalizer Bars',
+        'gravity': 'Physics & Gravity',
+        'color': 'Colors & Plasma',
+        'spark': 'Particles & Sparkles',
+        'other': 'Other / Clocks'
+      };
+      
+      for (let [catKey, catName] of Object.entries(categories)) {
+        if (cat && cat !== catKey) continue;
+        
+        const group = document.createElement('optgroup');
+        group.label = catName;
+        
+        let hasItems = false;
+        catalog.forEach(item => {
+          if (item.category === catKey) {
+            const matchesSearch = item.name.toLowerCase().includes(search);
+            if (matchesSearch) {
+              const opt = document.createElement('option');
+              opt.value = item.index;
+              opt.innerText = item.name;
+              group.appendChild(opt);
+              hasItems = true;
+            }
+          }
+        });
+        
+        if (hasItems) {
+          select.appendChild(group);
+        }
+      }
+      
+      if (select.innerHTML === '') {
+        select.innerHTML = '<option value="">No matching effects</option>';
+      } else {
+        select.value = currentValue;
+      }
+    }
+
+    function populateSettingsFields(sys) {
+      document.getElementById('sett-ntp-server').value = sys.ntp_server || 'pool.ntp.org';
+      document.getElementById('sett-timezone').value = sys.timezone_offset;
+      document.getElementById('sett-dst').checked = sys.dst_enabled === true || sys.dst_enabled === 1 || sys.dst_enabled === '1';
+      document.getElementById('sett-lat').value = sys.latitude;
+      document.getElementById('sett-lon').value = sys.longitude;
+      document.getElementById('sett-buzzer').checked = sys.buzzer_enabled !== false && sys.buzzer_enabled !== 0 && sys.buzzer_enabled !== '0';
+      document.getElementById('sett-status-messages').checked = sys.status_messages_enabled !== false && sys.status_messages_enabled !== 0 && sys.status_messages_enabled !== '0';
+      
+      const staticIpEnabled = sys.wifi_static_ip_enabled === true || sys.wifi_static_ip_enabled === 1 || sys.wifi_static_ip_enabled === '1';
+      document.getElementById('sett-static-enable').checked = staticIpEnabled;
+      toggleStaticFields(staticIpEnabled);
+      
+      document.getElementById('sett-static-ip').value = sys.wifi_static_ip || '';
+      document.getElementById('sett-static-subnet').value = sys.wifi_static_subnet || '';
+      document.getElementById('sett-static-gateway').value = sys.wifi_static_gateway || '';
+      document.getElementById('sett-static-dns').value = sys.wifi_static_dns || '';
+    }
+
+    // Main status update loop
+    async function updateStatus() {
+      try {
+        const res = await fetch('/api/status');
+        state = await res.json();
+        
+        // Update Time
+        const t = state.time;
+        const timeStr = `${String(t.hour).padStart(2, '0')}:${String(t.minute).padStart(2, '0')}:${String(t.second).padStart(2, '0')}`;
+        document.getElementById('header-time').innerText = timeStr;
+        
+        // Update Telemetry
+        const s = state.sensors;
+        document.getElementById('sens-temp').innerText = `${s.temp.toFixed(1)} °C`;
+        document.getElementById('sens-hum').innerText = `${s.humidity.toFixed(1)} %`;
+        document.getElementById('sens-pres').innerText = `${Math.round(s.pressure)} hPa`;
+        document.getElementById('sens-lux').innerText = `${s.lux.toFixed(0)} lx`;
+        
+        // Update Weather
+        const w = state.weather;
+        if (w && w.temp !== null) {
+          document.getElementById('weather-desc').innerText = w.description;
+          document.getElementById('weather-temp').innerText = `${w.temp.toFixed(1)} °C`;
+          document.getElementById('weather-feels').innerText = `${w.feels_like.toFixed(1)} °C`;
+          document.getElementById('weather-hum').innerText = `${w.humidity} %`;
+          document.getElementById('weather-pres').innerText = `${w.pressure} hPa`;
+          document.getElementById('weather-wind').innerText = `${(w.wind_speed * 3.6).toFixed(1)} km/h`;
+          
+          const sunrise = new Date(w.sunrise * 1000).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+          const sunset = new Date(w.sunset * 1000).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+          document.getElementById('weather-sun').innerText = `${sunrise} / ${sunset}`;
+          
+          const syncDate = new Date(w.last_sync * 1000);
+          document.getElementById('weather-sync-time').innerText = `Synced at ${syncDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`;
+        }
+        
+        // Update Active states for LED 1
+        updateStripUI(1, state.led1);
+        // Update Active states for LED 2
+        updateStripUI(2, state.led2);
+        
+        // Update Settings forms (only if user is not on the settings tab to avoid race conditions)
+        if (activeTab !== 'settings') {
+          document.getElementById('sett-auto-enable').checked = state.global.auto_enabled;
+          document.getElementById('sett-auto-interval-slider').value = state.global.auto_interval_ms / 1000;
+          document.getElementById('sett-auto-interval-val').innerText = `${state.global.auto_interval_ms / 1000} s`;
+          document.getElementById('sett-beat-sync').checked = state.global.beat_sync_enabled;
+          
+          if (state.global.settings) {
+            populateSettingsFields(state.global.settings);
+          }
+        }
+        
+      } catch (e) {
+        console.error("Status update error:", e);
+      }
+    }
+
+    function updateStripUI(ledNum, ledState) {
+      // Modes
+      const modes = ['OFF', 'TIME', 'EFFECTS'];
+      modes.forEach(m => {
+        const btn = document.getElementById(`led${ledNum}-mode-${m.toLowerCase()}`);
+        if (ledState.mode === m) {
+          btn.classList.add(m === 'OFF' ? 'active-accent' : 'active');
+        } else {
+          btn.classList.remove('active', 'active-accent');
+        }
+      });
+      
+      // Time Sub selectors for LED2
+      if (ledNum === 2) {
+        const subBlock = document.querySelector('.id-led2-time-sub');
+        if (ledState.mode === 'TIME') {
+          subBlock.style.display = 'block';
+          const subs = {'TIME_ONLY': 'led2-sub-time', 'CUSTOM': 'led2-sub-custom', 'TIME_CUSTOM': 'led2-sub-both'};
+          Object.entries(subs).forEach(([sKey, sId]) => {
+            const btn = document.getElementById(sId);
+            if (state.global.time_sub === sKey) {
+              btn.classList.add('active');
+            } else {
+              btn.classList.remove('active');
+            }
+          });
+        } else {
+          subBlock.style.display = 'none';
+        }
+      }
+      
+      // Active Effect Selection
+      const select = document.getElementById(`led${ledNum}-effect-select`);
+      if (document.activeElement !== select) {
+        select.value = ledState.effect_index;
+      }
+      
+      // Favorites Star
+      const favBtn = document.getElementById(`led${ledNum}-fav-btn`);
+      if (ledState.favorites.includes(ledState.effect_index)) {
+        favBtn.classList.add('active');
+      } else {
+        favBtn.classList.remove('active');
+      }
+      
+      // Populate Quick Favorites
+      const favContainer = document.getElementById(`led${ledNum}-favorites-container`);
+      const favPills = document.getElementById(`led${ledNum}-fav-pills`);
+      
+      if (ledState.favorites && ledState.favorites.length > 0) {
+        favContainer.style.display = 'block';
+        let pillsHtml = '';
+        ledState.favorites.forEach(idx => {
+          const item = catalog.find(c => c.index === idx);
+          if (item) {
+            const activeClass = ledState.effect_index === idx ? 'active' : '';
+            pillsHtml += `<button class="fav-pill ${activeClass}" onclick="selectEffect(${ledNum}, ${idx})">${item.name}</button>`;
+          }
+        });
+        favPills.innerHTML = pillsHtml;
+      } else {
+        favContainer.style.display = 'none';
+      }
+      
+      // Brightness
+      const slider = document.getElementById(`led${ledNum}-bright-slider`);
+      const valText = document.getElementById(`led${ledNum}-bright-val`);
+      if (!updatingSliders[`led${ledNum}-brightness`]) {
+        slider.value = ledState.brightness;
+        valText.innerText = ledState.brightness;
+      }
+      
+      // Generate Dynamic parameters list
+      const container = document.getElementById(`led${ledNum}-params-container`);
+      const catalogItem = catalog.find(item => item.index === ledState.effect_index);
+      
+      if (catalogItem && catalogItem.params.length > 0) {
+        // Only rebuild DOM structure when switching active effects
+        if (lastRenderedEffect[ledNum] !== ledState.effect_index) {
+          lastRenderedEffect[ledNum] = ledState.effect_index;
+          
+          const sections = groupParameters(catalogItem.params, catalogItem.mode);
+          let html = `
+            <div style="display:flex; justify-content:flex-end; margin-bottom: 12px; margin-top: 4px;">
+              <button class="btn" style="padding: 10px 16px; font-size: 0.85rem; font-weight:700; border-radius:12px; display:flex; align-items:center; gap:8px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1);" onclick="randomizeAllParams(${ledNum})">
+                <span>🎲 Randomize All Parameters</span>
+              </button>
+            </div>
+          `;
+          sections.forEach(sec => {
+            html += `
+              <div class="param-group-section" style="margin-top:10px; display:flex; flex-direction:column; gap:10px;">
+                <h4 style="font-size:0.9rem; font-weight:800; color:#8892b0; text-transform:uppercase; letter-spacing:0.5px; border-left:3px solid var(--primary); padding-left:8px; margin-bottom:2px;">${sec.title}</h4>
+            `;
+            
+            sec.params.forEach(p => {
+              const pName = p.name;
+              const pVal = ledState.params[pName] !== undefined ? ledState.params[pName] : p.default;
+              const inputId = `led${ledNum}-p-${pName}`;
+              
+              if (p.type === 'color') {
+                let colorHex = '#ff0000';
+                let isRandom = pVal === 'RM';
+                const rainbowVal = ledState.params['rainbow'] === true || ledState.params['rainbow'] === 1;
+                let isRainbowCycle = pVal === 'R' && !rainbowVal;
+                let isRainbowGradient = pVal === 'RG' || (pVal === 'R' && rainbowVal);
+                let isSpecial = isRandom || isRainbowCycle || isRainbowGradient;
+                if (Array.isArray(pVal) && pVal.length >= 3) {
+                  colorHex = rgbToHex(pVal[0], pVal[1], pVal[2]);
+                }
+                
+                html += `
+                  <div class="color-picker-container" style="background:rgba(255,255,255,0.01); border:1px solid rgba(255,255,255,0.03); padding:12px; border-radius:12px; display:flex; flex-direction:column; gap:8px;">
+                    <div style="display:flex; justify-content:space-between; font-size:0.85rem; font-weight:600;">
+                      <span>${pName}</span>
+                      <span class="val" style="color:var(--primary); font-weight:800;">${isRandom ? 'Random' : (isRainbowCycle ? 'Rainbow Cycle' : (isRainbowGradient ? 'Rainbow Gradient' : colorHex))}</span>
+                    </div>
+                    <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+                      <div class="color-preview-box" style="position:relative; width:44px; height:44px; border-radius:12px; overflow:hidden; border:1px solid rgba(255,255,255,0.1); flex-shrink:0; background:${isRandom ? 'radial-gradient(circle, #ff007f, #7f00ff, #00f0ff)' : (isRainbowCycle ? 'linear-gradient(45deg, red, yellow, green, blue, purple)' : (isRainbowGradient ? 'linear-gradient(135deg, red, orange, yellow, green, blue, indigo, violet)' : colorHex))};">
+                        <input type="color" id="${inputId}" value="${colorHex}" onchange="changeColorParam(${ledNum}, '${pName}', this.value)" style="position:absolute; top:-8px; left:-8px; width:60px; height:60px; border:none; padding:0; cursor:pointer; background:none; opacity:${isSpecial ? 0 : 1};">
+                      </div>
+                      <button class="btn ${isRandom ? 'active' : ''}" style="padding: 8px 10px; font-size:0.8rem;" onclick="changeColorParamSpecial(${ledNum}, '${pName}', 'RM')">🎲 Random</button>
+                      <button class="btn ${isRainbowCycle ? 'active' : ''}" style="padding: 8px 10px; font-size:0.8rem;" onclick="changeColorParamSpecial(${ledNum}, '${pName}', 'R')">🌈 Cycle</button>
+                      <button class="btn ${isRainbowGradient ? 'active' : ''}" style="padding: 8px 10px; font-size:0.8rem;" onclick="changeColorParamSpecial(${ledNum}, '${pName}', 'RG')">🌈 Gradient</button>
+                    </div>
+                  </div>
+                `;
+              } else if (p.min === 0 && p.max === 1 && p.step === 1) {
+                const checked = pVal === 1 || pVal === true ? 'checked' : '';
+                html += `
+                  <div class="toggle-container" style="background:rgba(255,255,255,0.01); border:1px solid rgba(255,255,255,0.03); padding:10px 12px; border-radius:12px;">
+                    <div class="toggle-info">
+                      <span class="toggle-label">${pName}</span>
+                    </div>
+                    <label class="switch">
+                      <input type="checkbox" id="${inputId}" ${checked} onchange="changeParam(${ledNum}, '${pName}', this.checked ? 1 : 0)">
+                      <span class="slider"></span>
+                    </label>
+                  </div>
+                `;
+              } else {
+                html += `
+                  <div class="slider-container">
+                    <div class="slider-header">
+                      <span>${pName}</span>
+                      <span class="val" id="${inputId}-val">${pVal}</span>
+                    </div>
+                    <div class="slider-wrapper">
+                      <button class="btn-step" onclick="adjustParamBtn(${ledNum}, '${pName}', -1)">-</button>
+                      <input type="range" id="${inputId}" min="${p.min}" max="${p.max}" step="${p.step}" value="${pVal}" 
+                        oninput="document.getElementById('${inputId}-val').innerText=this.value; throttleParamChange(${ledNum}, '${pName}', this.value)">
+                      <button class="btn-step" onclick="adjustParamBtn(${ledNum}, '${pName}', 1)">+</button>
+                    </div>
+                  </div>
+                `;
+              }
+            });
+            html += `</div>`;
+          });
+          container.innerHTML = html;
+        }
+
+        // Keep existing DOM inputs updated with real-time value changes without tearing them down
+        catalogItem.params.forEach(p => {
+          const pName = p.name;
+          const pVal = ledState.params[pName] !== undefined ? ledState.params[pName] : p.default;
+          const inputId = `led${ledNum}-p-${pName}`;
+          const input = document.getElementById(inputId);
+          
+          if (input && document.activeElement !== input) {
+            if (p.type === 'color') {
+              let colorHex = '#ff0000';
+              let isRandom = pVal === 'RM';
+              const rainbowVal = ledState.params['rainbow'] === true || ledState.params['rainbow'] === 1;
+              let isRainbowCycle = pVal === 'R' && !rainbowVal;
+              let isRainbowGradient = pVal === 'RG' || (pVal === 'R' && rainbowVal);
+              let isSpecial = isRandom || isRainbowCycle || isRainbowGradient;
+              if (Array.isArray(pVal) && pVal.length >= 3) {
+                colorHex = rgbToHex(pVal[0], pVal[1], pVal[2]);
+              }
+              input.value = colorHex;
+              input.style.opacity = isSpecial ? '0' : '1';
+              
+              const containerEl = input.closest('.color-picker-container');
+              if (containerEl) {
+                const previewEl = containerEl.querySelector('.color-preview-box');
+                if (previewEl) {
+                  previewEl.style.background = isRandom ? 'radial-gradient(circle, #ff007f, #7f00ff, #00f0ff)' : (isRainbowCycle ? 'linear-gradient(45deg, red, yellow, green, blue, purple)' : (isRainbowGradient ? 'linear-gradient(135deg, red, orange, yellow, green, blue, indigo, violet)' : colorHex));
+                }
+                const valEl = containerEl.querySelector('.val');
+                if (valEl) {
+                  valEl.innerText = isRandom ? 'Random' : (isRainbowCycle ? 'Rainbow Cycle' : (isRainbowGradient ? 'Rainbow Gradient' : colorHex));
+                }
+              }
+            } else if (p.min === 0 && p.max === 1 && p.step === 1) {
+              input.checked = pVal === 1 || pVal === true;
+            } else {
+              input.value = pVal;
+              const valEl = document.getElementById(`${inputId}-val`);
+              if (valEl) {
+                valEl.innerText = pVal;
+              }
+            }
+          }
+        });
+      } else {
+        lastRenderedEffect[ledNum] = -1;
+        container.innerHTML = `<span style="font-size:0.85rem; opacity:0.5; font-style:italic; text-align:center; padding:10px;">This scenario has no custom parameters.</span>`;
+      }
+    }
+
+    // Set LED mode (ON/OFF/CLOCK)
+    async function setMode(ledNum, mode) {
+      await fetch(`/api/control?led=${ledNum}&mode=${mode}`);
+      updateStatus();
+    }
+
+    // Set Time display sub-overlay
+    async function setTimeSub(sub) {
+      await fetch(`/api/control?time_sub=${sub}`);
+      updateStatus();
+    }
+
+    // Toggle favorite effect
+    async function toggleFavorite(ledNum) {
+      await fetch(`/api/control?led=${ledNum}&toggle_favorite=1`);
+      updateStatus();
+    }
+
+    // Handle effect scenario selection dropdown
+    async function selectEffect(ledNum, effectIndex) {
+      if (!effectIndex) return;
+      await fetch(`/api/control?led=${ledNum}&effect_index=${effectIndex}`);
+      updateStatus();
+    }
+
+    function adjustBrightnessBtn(ledNum, direction) {
+      const slider = document.getElementById(`led${ledNum}-bright-slider`);
+      const current = parseInt(slider.value) || 0;
+      const step = 8;
+      const next = Math.max(0, Math.min(255, current + (direction * step)));
+      slider.value = next;
+      changeBrightness(ledNum, next);
+    }
+
+    function adjustParamBtn(ledNum, paramName, direction) {
+      const inputId = `led${ledNum}-p-${paramName}`;
+      const input = document.getElementById(inputId);
+      if (!input) return;
+      const min = parseFloat(input.min) || 0;
+      const max = parseFloat(input.max) || 0;
+      const step = parseFloat(input.step) || 1;
+      const current = parseFloat(input.value) || 0;
+      
+      let next = current + (direction * step);
+      const decimals = (String(step).split('.')[1] || '').length;
+      next = parseFloat(next.toFixed(decimals));
+      next = Math.max(min, Math.min(max, next));
+      
+      input.value = next;
+      document.getElementById(`${inputId}-val`).innerText = next;
+      changeParam(ledNum, paramName, next);
+    }
+
+    function rgbToHex(r, g, b) {
+      return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+    }
+    
+    function hexToRgb(hex) {
+      const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+      return result ? [
+        parseInt(result[1], 16),
+        parseInt(result[2], 16),
+        parseInt(result[3], 16)
+      ] : [255, 0, 0];
+    }
+
+    async function changeColorParam(ledNum, paramName, hexVal) {
+      const rgb = hexToRgb(hexVal);
+      const valStr = `[${rgb[0]},${rgb[1]},${rgb[2]}]`;
+      await fetch(`/api/control?led=${ledNum}&param=${paramName}&val=${valStr}`);
+      updateStatus();
+    }
+    
+    async function changeColorParamSpecial(ledNum, paramName, type) {
+      await fetch(`/api/control?led=${ledNum}&param=${paramName}&val=${type}`);
+      updateStatus();
+    }
+
+    async function randomizeAllParams(ledNum) {
+      await fetch(`/api/control?led=${ledNum}&action=RANDOMIZE`);
+      updateStatus();
+    }
+
+    function groupParameters(params, effectMode) {
+      const hasColorP = params.some(p => p.name === 'color_p');
+      const hasColorS = params.some(p => p.name === 'color_s');
+      const hasColorT = params.some(p => p.name === 'color_t');
+      const hasColorQ = params.some(p => p.name === 'color_q');
+      
+      let filteredParams = params.filter(p => {
+        const name = p.name;
+        if (name === 'hue_p' && hasColorP) return false;
+        if (name === 'hue_s' && hasColorS) return false;
+        if (name === 'hue_t' && hasColorT) return false;
+        if (name === 'hue_q' && hasColorQ) return false;
+        return true;
+      });
+
+      let sections = [];
+      let groupedKeys = new Set();
+      
+      const barSuffixes = [
+        { index: 0, suffix: '0', color: 'color_p', title: 'Bar 0 (Left)' },
+        { index: 1, suffix: '1', color: 'color_s', title: 'Bar 1 (Middle-Left)' },
+        { index: 2, suffix: '2', color: 'color_t', title: 'Bar 2 (Middle-Right)' },
+        { index: 3, suffix: '3', color: 'color_q', title: 'Bar 3 (Right)' }
+      ];
+      
+      if (effectMode === 'static_bars') {
+        barSuffixes.forEach(bar => {
+          let barParams = [];
+          filteredParams.forEach(p => {
+            const name = p.name.toLowerCase();
+            if (name === `pos_${bar.index}` || name === `height_${bar.index}` || name === bar.color) {
+              barParams.push(p);
+              groupedKeys.add(p.name);
+            }
+          });
+          
+          if (barParams.length > 0) {
+            barParams.sort((a, b) => {
+              const nameA = a.name.toLowerCase();
+              const nameB = b.name.toLowerCase();
+              if (nameA.startsWith('color_')) return -1;
+              if (nameB.startsWith('color_')) return 1;
+              if (nameA.startsWith('pos_')) return -1;
+              if (nameB.startsWith('pos_')) return 1;
+              return 0;
+            });
+            sections.push({
+              title: bar.title,
+              params: barParams
+            });
+          }
+        });
+      }
+      
+      let colorParams = [];
+      let speedParams = [];
+      let physicsParams = [];
+      let visualsParams = [];
+      let otherParams = [];
+      
+      filteredParams.forEach(p => {
+        if (groupedKeys.has(p.name)) return;
+        
+        const name = p.name.toLowerCase();
+        
+        if (p.type === 'color' || name.includes('hue') || name.startsWith('color_') || name === 'color' || name.endsWith('_color')) {
+          colorParams.push(p);
+        } else if (name.includes('speed') || name.includes('delay') || name.includes('interval') || name.includes('rate') || name.includes('decay')) {
+          speedParams.push(p);
+        } else if (name.includes('gravity') || name.includes('wind') || name.includes('bounce') || name.includes('mass') || name.includes('friction') || name.includes('attract') || name.includes('force')) {
+          physicsParams.push(p);
+        } else if (name.includes('ghost') || name.includes('trail') || name.includes('peak') || name.includes('size') || name.includes('width') || name.includes('count') || name.includes('particles') || name.includes('limit') || name.includes('threshold')) {
+          visualsParams.push(p);
+        } else {
+          otherParams.push(p);
+        }
+      });
+      
+      if (colorParams.length > 0) sections.push({ title: '🎨 Colors & Palettes', params: colorParams });
+      if (speedParams.length > 0) sections.push({ title: '⚡ Timing & Speed', params: speedParams });
+      if (physicsParams.length > 0) sections.push({ title: '🪐 Physics & Dynamics', params: physicsParams });
+      if (visualsParams.length > 0) sections.push({ title: '✨ Visual Effects', params: visualsParams });
+      if (otherParams.length > 0) sections.push({ title: '⚙️ Other Parameters', params: otherParams });
+      
+      return sections;
+    }
+
+    // Handle brightness slider changes (Throttled)
+    const changeBrightness = throttle(async function(ledNum, val) {
+      updatingSliders[`led${ledNum}-brightness`] = true;
+      document.getElementById(`led${ledNum}-bright-val`).innerText = val;
+      await fetch(`/api/control?led=${ledNum}&brightness=${val}`);
+      setTimeout(() => updatingSliders[`led${ledNum}-brightness`] = false, 1000);
+    }, 100);
+
+    // Dynamic Parameter adjustment (Throttled)
+    const throttleParamChange = throttle(async function(ledNum, paramName, val) {
+      await changeParam(ledNum, paramName, val);
+    }, 100);
+
+    async function changeParam(ledNum, paramName, val) {
+      await fetch(`/api/control?led=${ledNum}&param=${paramName}&val=${val}`);
+    }
+
+    // Auto Advance Setting adjust
+    async function toggleAutoEnable(checked) {
+      await fetch(`/api/control?auto_enabled=${checked ? 1 : 0}`);
+      updateStatus();
+    }
+
+    const changeAutoInterval = throttle(async function(seconds) {
+      document.getElementById('sett-auto-interval-val').innerText = `${seconds} s`;
+      await fetch(`/api/control?auto_interval=${seconds * 1000}`);
+    }, 200);
+
+    async function toggleBeatSync(checked) {
+      await fetch(`/api/control?beat_sync=${checked ? 1 : 0}`);
+      updateStatus();
+    }
+
+    // General Setting Persistence
+    async function saveSystemSettings() {
+      const ntp = document.getElementById('sett-ntp-server').value;
+      const tz = document.getElementById('sett-timezone').value;
+      const dst = document.getElementById('sett-dst').checked ? 1 : 0;
+      const lat = document.getElementById('sett-lat').value;
+      const lon = document.getElementById('sett-lon').value;
+      const buzzer = document.getElementById('sett-buzzer').checked ? 1 : 0;
+      const statusMsgs = document.getElementById('sett-status-messages').checked ? 1 : 0;
+      
+      const staticIp = document.getElementById('sett-static-enable').checked ? 1 : 0;
+      const ip = document.getElementById('sett-static-ip').value;
+      const subnet = document.getElementById('sett-static-subnet').value;
+      const gateway = document.getElementById('sett-static-gateway').value;
+      const dns = document.getElementById('sett-static-dns').value;
+
+      try {
+        await fetch(`/api/control?setting=ntp_server&val=${ntp}`);
+        await fetch(`/api/control?setting=timezone_offset&val=${tz}`);
+        await fetch(`/api/control?setting=dst_enabled&val=${dst}`);
+        await fetch(`/api/control?setting=latitude&val=${lat}`);
+        await fetch(`/api/control?setting=longitude&val=${lon}`);
+        await fetch(`/api/control?setting=buzzer_enabled&val=${buzzer}`);
+        await fetch(`/api/control?setting=status_messages_enabled&val=${statusMsgs}`);
+        
+        await fetch(`/api/control?setting=wifi_static_ip_enabled&val=${staticIp}`);
+        if (staticIp) {
+          await fetch(`/api/control?setting=wifi_static_ip&val=${ip}`);
+          await fetch(`/api/control?setting=wifi_static_subnet&val=${subnet}`);
+          await fetch(`/api/control?setting=wifi_static_gateway&val=${gateway}`);
+          await fetch(`/api/control?setting=wifi_static_dns&val=${dns}`);
+        }
+        
+        // Update local settings state immediately to avoid race condition on next poll
+        if (state.global && state.global.settings) {
+          Object.assign(state.global.settings, {
+            ntp_server: ntp,
+            timezone_offset: parseFloat(tz),
+            dst_enabled: dst === 1,
+            latitude: parseFloat(lat),
+            longitude: parseFloat(lon),
+            buzzer_enabled: buzzer === 1,
+            status_messages_enabled: statusMsgs === 1,
+            wifi_static_ip_enabled: staticIp === 1,
+            wifi_static_ip: ip,
+            wifi_static_subnet: subnet,
+            wifi_static_gateway: gateway,
+            wifi_static_dns: dns
+          });
+        }
+        
+        showToast("Settings Saved Successfully");
+        updateStatus();
+      } catch (e) {
+        showToast("Error Saving Settings");
+      }
+    }
+
+    // Bootloader sequence
+    async function init() {
+      await loadCatalog();
+      await updateStatus();
+      setInterval(updateStatus, 2000);
+    }
+
+    // Service Worker registration
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js')
+        .then(() => console.log('Service Worker Registered'))
+        .catch(err => console.error('Service Worker Register Failed', err));
+    }
+
+    // PWA Install Prompt Banner
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      document.getElementById('install-banner').style.display = 'flex';
+    });
+
+    document.getElementById('install-btn').addEventListener('click', async () => {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === 'accepted') {
+          document.getElementById('install-banner').style.display = 'none';
+        }
+        deferredPrompt = null;
+      }
+    });
+
+    window.addEventListener('appinstalled', () => {
+      document.getElementById('install-banner').style.display = 'none';
+      console.log('CLeds PWA Installed Successfully!');
+    });
+
+    window.onload = init;
+  </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#1f2833" />
+      <stop offset="100%" stop-color="#0b0c10" />
+    </radialGradient>
+    <linearGradient id="glow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00f2fe" />
+      <stop offset="100%" stop-color="#4facfe" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#00f2fe" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="512" height="512" rx="128" fill="url(#bg)"/>
+  
+  <!-- LED Matrix Art -->
+  <g transform="translate(96, 96)" filter="url(#shadow)">
+    <!-- Outline -->
+    <rect width="320" height="320" rx="32" fill="none" stroke="url(#glow)" stroke-width="8"/>
+    
+    <!-- Grid of glowing circles representing LEDs -->
+    <!-- Row 1 -->
+    <circle cx="64" cy="64" r="24" fill="#ff007f"/>
+    <circle cx="160" cy="64" r="20" fill="#00f2fe" opacity="0.8"/>
+    <circle cx="256" cy="64" r="24" fill="#7f00ff"/>
+    
+    <!-- Row 2 -->
+    <circle cx="64" cy="160" r="20" fill="#00f2fe" opacity="0.8"/>
+    <circle cx="160" cy="160" r="28" fill="#ff007f"/>
+    <circle cx="256" cy="160" r="20" fill="#ffff00"/>
+    
+    <!-- Row 3 -->
+    <circle cx="64" cy="256" r="24" fill="#7f00ff"/>
+    <circle cx="160" cy="256" r="20" fill="#ffff00" opacity="0.8"/>
+    <circle cx="256" cy="256" r="28" fill="#00f2fe"/>
+  </g>
+</svg>
