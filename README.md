@@ -110,7 +110,6 @@ CLeds_leds/
 │   ├── ir_core1/           # Core 1 hardware RMT IR decoder
 │   └── leddisplay/         # Text formatting and matrix layout engine
 ├── lib/                    # Python library modules & drivers
-│   ├── aleds_rgb.py        # MicroPython wrapper class for the C driver
 │   ├── astro3.py           # Sun calculations (sunrise, sunset, twilight)
 │   ├── bh1750.py           # BH1750 luminance sensor driver
 │   ├── bme280.py           # BME280 temperature, humidity, & pressure driver
