@@ -1,6 +1,6 @@
-# CLeds Controller System V2
+# Leds System Controller
 
-CLeds is a high-performance, real-time sound-reactive LED display and physics-based animation system designed for the **ESP32-S3** microcontroller running custom **MicroPython** firmware. 
+Leds system is a high-performance, real-time sound-reactive LED display and physics-based animation system designed for the **ESP32-S3** microcontroller running custom **MicroPython** firmware. 
 
 By offloading timing-critical tasks (such as pixel rendering, I2S audio capture, Fast Fourier Transform (FFT) analysis, and infrared decoding) to custom native C modules running asynchronously on **Core 1**, CLeds achieves extremely smooth visual rendering (up to 25+ FPS) without blocking the MicroPython interpreter or disrupting Wi-Fi operations on Core 0.
 
