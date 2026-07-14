@@ -52,30 +52,95 @@ Below is the pin assignment configured in [init.py](file:///h:/Mój dysk/CLeds/C
 CLeds is divided into two distinct execution layers to ensure both performance and ease of configuration:
 
 ```mermaid
+%%{init: {"layout": "elk"}}%%
 graph TD;
-    subgraph MicroPython_Layer_Core 0;
-        main[main.py: App Loop & Controls] --> init[init.py: Hardware & Sensors];
-        main --> effects[effects.py: Visual Renderers];
-        effects --> helpers[helpers.py: Math & Colors];
-        main --> mapper[ir_remote_mapper.py: Action Mapper];
-        main --> web[web_server.py: Non-Blocking Web Server];
-        init --> wifi[wifi_manager.py];
-        init --> bme[bme280.py];
-        init --> bh[bh1750.py];
-        init --> ds[ds3231.py];
-    end;
-    
-    subgraph Custom C Modules (Core 1 / Hardware);
-        leddisplay_c[leddisplay: Text Rendering & Layout];
-        fft_c[fft_core1: I2S & FFT - Core 1 task];
-        ir_c[ir_core1: RMT IR Decoders - Core 1 task];
-        aleds_c[aleds_rgb: Native Pixel Driver];
-    end;
+    %% Legend
+    subgraph Legend["Legend"]
+        ctrl["Control Flow — Indigo (solid)"]
+        data["Sensor/Data Flow — Cyan (solid)"]
+        fb["Feedback/Render Loop — Green (dashed)"]
+        hw_in["Hardware Input — Orange (→ C module)"]
+        hw_out["Hardware Output — Orange (← C module)"]
+    end
 
-    effects --> leddisplay_c;
-    main --> ir_c;
-    init --> aleds_c;
-    main --> fft_c;
+    subgraph MicroPython_Layer_Core1
+        main[main.py: App Loop & Controls] --> init[init.py: Hardware & Sensors]
+        main --> effects[effects.py: Visual Renderers]
+        effects --> helpers[helpers.py: Math & Colors]
+        main --> mapper[ir_remote_mapper.py: Action Mapper]
+        main --> web[web_server.py: Non-Blocking Web Server]
+        init --> wifi[wifi_manager.py]
+        init --> bme[bme280.py]
+        init --> bh[bh1750.py]
+        init --> ds[ds3231.py]
+    end
+
+    subgraph Custom_C_Modules_Core1["Custom C Modules (Core 1 / Hardware)"]
+        subgraph FFT_Module["fft_core1: I2S & FFT - Core 1 Task"]
+            i2s_input["I2S Input Signal (Audio Stream)"] -->|hw_in| fft_c
+            fft_c -->|hw_out| i2s_output["I2S Output (Frequency Data)"]
+        end
+
+        subgraph IR_Module["ir_core1: RMT IR Decoders - Core 1 Task"]
+            rmt_input["RMT IR Input (Infrared Pulse)"] -->|hw_in| ir_c
+        end
+
+        subgraph ALEDs_Module["aleds_rgb: Native Pixel Driver"]
+            aleds_c -->|hw_out| gpio_led["GPIO LED Output (Addressable Led Data)"]
+        end
+
+        leddisplay_c[leddisplay: Text Rendering & Layout]
+    end
+
+    %% External hardware from Python layer
+    gpio_wifi["GPIO WiFi Control (On/Off Signal)"]
+    wifi -->|hw_out| gpio_wifi
+
+    %% Control flow (indigo)
+    main -->|control| init
+    main -->|control| effects
+    main -->|control| mapper
+    main -->|control| web
+    main -->|control| fft_c
+    main -->|control| ir_c
+    init -->|control| aleds_c
+
+    %% Sensor/data flow (cyan)
+    init -->|data| wifi
+    init -->|data| bme
+    init -->|data| bh
+    init -->|data| ds
+    ds -->|data| main
+
+    %% Feedback loops (green dashed)
+    effects -->|feedback| leddisplay_c
+    fft_c -.->|feedback| effects
+    aleds_c -.->|feedback| effects
+    fft_c -.->|feedback| leddisplay_c
+    ir_c -.->|feedback| mapper
+
+    %% Node color definitions
+    classDef python fill:#eef2ff,stroke:#818cf8
+    classDef cmod fill:#f0fdfa,stroke:#2dd4bf
+    classDef hardware fill:#fff7ed,stroke:#fb923c
+
+    class main,init,effects,helpers,mapper,web,wifi,bme,bh,ds python
+    class leddisplay_c,fft_c,ir_c,aleds_c cmod
+    class i2s_input,i2s_output,rmt_input,gpio_led,gpio_wifi hardware
+
+    %% Flow color definitions
+    classDef control stroke:#818cf8,stroke-width:2px
+    classDef data stroke:#22d3ee,stroke-width:2px
+    classDef feedback stroke:#4ade80,stroke-dasharray:4 4,stroke-width:2px
+    classDef hw_in stroke:#fb923c,stroke-width:2px
+    classDef hw_out stroke:#fb923c,stroke-width:2px,stroke-dasharray:2 0
+
+    %% Legend color mapping
+    class ctrl control
+    class data data
+    class fb feedback
+    class hw_in hw_in
+    class hw_out hw_out
 ```
 
 ### 1. Python Application & Drivers
