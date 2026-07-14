@@ -51,103 +51,31 @@ Below is the pin assignment configured in [init.py](file:///h:/Mój dysk/CLeds/C
 
 CLeds is divided into two distinct execution layers to ensure both performance and ease of configuration:
 
-```mermaid
-%%{init: {"layout": "elk", "themeVariables": {"spacing": 30, "edgeSpacingFactor": 0.6, "rectBorderRadius": 4}}}%%
-graph TD;
-
-    %% --- Level 1: Control Layer ---
-    subgraph Control_Layer["Application Control Layer"]
-        main[main.py: App Loop & Controls]
-        mapper[ir_remote_mapper.py: Action Mapper]
-        web[web_server.py: Non-Blocking Web Server]
-        ds[ds3231.py]
+graph TD
+    subgraph MicroPython Layer (Core 0)
+        main[main.py: App Loop & Controls] --> init[init.py: Hardware & Sensors]
+        main --> effects[effects.py: Visual Renderers]
+        effects --> helpers[helpers.py: Math & Colors]
+        main --> mapper[ir_remote_mapper.py: Action Mapper]
+        main --> web[web_server.py: Non-Blocking Web Server]
+        init --> wifi[wifi_manager.py]
+        init --> bme[bme280.py]
+        init --> bh[bh1750.py]
+        init --> ds[ds3231.py]
     end
-
-    %% --- Level 2: Sensor Layer ---
-    subgraph Sensor_Layer["Sensors & Environment"]
-        init[init.py: Hardware & Sensors]
-        wifi[wifi_manager.py]
-        bme[bme280.py]
-        bh[bh1750.py]
-    end
-
-    %% --- Level 3: Rendering Layer ---
-    subgraph Rendering_Layer["Rendering & Effects"]
-        effects[effects.py: Visual Renderers]
-        helpers[helpers.py: Math & Colors]
+    
+    subgraph Custom C Modules (Core 1 / Hardware)
         leddisplay_c[leddisplay: Text Rendering & Layout]
+        fft_c[fft_core1: I2S & FFT - Core 1 task]
+        ir_c[ir_core1: RMT IR Decoders - Core 1 task]
         aleds_c[aleds_rgb: Native Pixel Driver]
     end
 
-    %% --- Level 4: Hardware Layer ---
-    subgraph Hardware_Layer["Custom C Modules (Core 1 Tasks & Physical I/O)"]
-        subgraph FFT_Module["fft_core1: I2S & FFT Task"]
-            i2s_input["I2S Input (Audio Stream)"] -->|hw_in AUDIO| fft_c[FFT Core Processor]
-            fft_c -->|hw_out Freq Data| i2s_output["I2S Output (Frequency Data)"]
-        end
-        subgraph IR_Module["ir_core1: RMT IR Decoder Task"]
-            rmt_input["RMT IR Input (Infrared Pulse)"] -->|hw_in IR| ir_c[IR Decoder]
-        end
-        subgraph LED_Module["aleds_rgb: Pixel Driver Task"]
-            aleds_c -->|hw_out LED| gpio_led["GPIO LED Output (PWM/NeoPixel Data)"]
-        end
-    end
-
-    %% --- Connection Flow (Top-down) ---
-    %% Control → Sensors
-    main -->|control| init
-    main -->|control| mapper
-    main -->|control| web
-    init -->|control| aleds_c
-
-    %% Sensors → Rendering
-    init -->|data| effects
-    wifi -->|data| web
-    bme -->|data| main
-    bh -->|data| main
-    ds -->|data| main
-
-    %% Rendering → Hardware
     effects --> leddisplay_c
-    effects --> aleds_c
-    effects -->|feedback| fft_c
-    leddisplay_c -->|feedback| fft_c
+    main --> ir_c
+    init --> aleds_c
+    main --> fft_c
 
-    %% Hardware → Input Feedback
-    fft_c -.->|feedback| effects
-    ir_c -.->|feedback| mapper
-    aleds_c -.->|feedback| effects
-
-    %% --- Compact Legend (Scaled for Width) ---
-    subgraph Legend["Legend (Interaction & Flow Types)"]
-        direction LR
-        ctrl["Control Flow — Indigo (solid)"]:::control
-        data["Sensor/Data Flow — Cyan (solid)"]:::data
-        fb["Feedback/Render Loop — Green (dashed)"]:::feedback
-        hw_in["Hardware Input — Orange (→ C module)"]:::hw_in
-        hw_out["Hardware Output — Orange (← C module)"]:::hw_out
-    end
-
-    %% Styling
-    classDef python fill:#eef2ff,stroke:#818cf8
-    classDef cmod fill:#f0fdfa,stroke:#2dd4bf
-    classDef hardware fill:#fff7ed,stroke:#fb923c
-    classDef control stroke:#818cf8,stroke-width:2px
-    classDef data stroke:#22d3ee,stroke-width:2px
-    classDef feedback stroke:#4ade80,stroke-dasharray:4 4,stroke-width:2px
-    classDef hw_in stroke:#fb923c,stroke-width:2px
-    classDef hw_out stroke:#fb923c,stroke-width:2px,stroke-dasharray:2 0
-
-    class main,mapper,web,ds,init,wifi,bme,bh,effects,helpers python
-    class fft_c,ir_c,aleds_c,leddisplay_c cmod
-    class i2s_input,i2s_output,rmt_input,gpio_led hardware
-
-    class ctrl control
-    class data data
-    class fb feedback
-    class hw_in hw_in
-    class hw_out hw_out
-```
 
 ### 1. Python Application & Drivers
 * **[main.py](file:///h:/Mój dysk/CLeds/CLeds_leds/main.py):** The master coordinator and scheduler. Drives the main loop, manages targeted frame rates (FPS limiting), processes IR actions, tracks UI overlay message timeouts, handles menu states, polls the web server, and automatically advances between visual scenes.
