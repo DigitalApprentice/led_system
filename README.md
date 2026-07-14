@@ -51,7 +51,8 @@ Below is the pin assignment configured in [init.py](file:///h:/Mój dysk/CLeds/C
 
 CLeds is divided into two distinct execution layers to ensure both performance and ease of configuration:
 
-'''mermaid
+```mermaid
+
 graph TD
     subgraph MicroPythonLayer0["MicroPython Layer (Core 0)"]
         main[main.py: App Loop & Controls] --> init[init.py: Hardware & Sensors]
@@ -76,7 +77,7 @@ graph TD
     main --> ir_c
     init --> aleds_c
     main --> fft_c
-'''
+```
 
 ### 1. Python Application & Drivers
 * **[main.py](file:///h:/Mój dysk/CLeds/CLeds_leds/main.py):** The master coordinator and scheduler. Drives the main loop, manages targeted frame rates (FPS limiting), processes IR actions, tracks UI overlay message timeouts, handles menu states, polls the web server, and automatically advances between visual scenes.
