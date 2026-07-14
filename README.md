@@ -53,30 +53,50 @@ CLeds is divided into two distinct execution layers to ensure both performance a
 
 ```mermaid
 
-graph TD
-    subgraph MicroPythonLayer0["MicroPython Layer (Core 0)"]
-        main[main.py: App Loop & Controls] --> init[init.py: Hardware & Sensors]
-        main --> effects[effects.py: Visual Renderers]
-        effects --> helpers[helpers.py: Math & Colors]
-        main --> mapper[ir_remote_mapper.py: Action Mapper]
-        main --> web[web_server.py: Non-Blocking Web Server]
-        init --> wifi[wifi_manager.py]
-        init --> bme[bme280.py]
-        init --> bh[bh1750.py]
-        init --> ds[ds3231.py]
-    end
-    
-    subgraph CustomCModules1["Custom C Modules (Core 1 / Hardware)"]
-        leddisplay_c[leddisplay: Text Rendering & Layout]
-        fft_c[fft_core1: I2S & FFT - Core 1 task]
-        ir_c[ir_core1: RMT IR Decoders - Core 1 task]
-        aleds_c[aleds_rgb: Native Pixel Driver]
-    end
+---
+config:
+  layout: elk
+---
+flowchart TD
+  subgraph MicroPython_Layer["MicroPython Layer (Core 0)"]
+    class MicroPython_Layer indigo
+    main["main.py: App Loop & Controls"]:::indigo
+    init["init.py: Hardware & Sensors"]:::indigo
+    effects["effects.py: Visual Renderers"]:::indigo
+    helpers["helpers.py: Math & Colors"]:::indigo
+    mapper["ir_remote_mapper.py: Action Mapper"]:::indigo
+    web["web_server.py: Non-Blocking Web Server"]:::indigo
+    wifi["wifi_manager.py"]:::indigo
+    bme["bme280.py"]:::indigo
+    bh["bh1750.py"]:::indigo
+    ds["ds3231.py"]:::indigo
 
-    effects --> leddisplay_c
-    main --> ir_c
-    init --> aleds_c
-    main --> fft_c
+    main --> init
+    main --> effects
+    effects --> helpers
+    main --> mapper
+    main --> web
+    init --> wifi
+    init --> bme
+    init --> bh
+    init --> ds
+  end
+
+  subgraph Custom_C_Modules["Custom C Modules (Core 1 / Hardware)"]
+    class Custom_C_Modules teal
+    leddisplay_c["leddisplay: Text Rendering & Layout"]:::teal
+    fft_c["fft_core1: I2S & FFT - Core 1 task"]:::teal
+    ir_c["ir_core1: RMT IR Decoders - Core 1 task"]:::teal
+    aleds_c["aleds_rgb: Native Pixel Driver"]:::teal
+  end
+
+  main --> fft_c
+  effects --> leddisplay_c
+  main --> ir_c
+  init --> aleds_c
+
+  classDef indigo stroke:#818cf8,fill:#eef2ff;
+  classDef teal stroke:#2dd4bf,fill:#f0fdfa;
 ```
 
 ### 1. Python Application & Drivers
