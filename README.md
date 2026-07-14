@@ -52,30 +52,30 @@ Below is the pin assignment configured in [init.py](file:///h:/Mój dysk/CLeds/C
 CLeds is divided into two distinct execution layers to ensure both performance and ease of configuration:
 
 ```mermaid
-graph TD
-    subgraph MicroPython Layer (Core 0)
-        main[main.py: App Loop & Controls] --> init[init.py: Hardware & Sensors]
-        main --> effects[effects.py: Visual Renderers]
-        effects --> helpers[helpers.py: Math & Colors]
-        main --> mapper[ir_remote_mapper.py: Action Mapper]
-        main --> web[web_server.py: Non-Blocking Web Server]
-        init --> wifi[wifi_manager.py]
-        init --> bme[bme280.py]
-        init --> bh[bh1750.py]
-        init --> ds[ds3231.py]
-    end
+graph TD;
+    subgraph MicroPython Layer (Core 0);
+        main[main.py: App Loop & Controls] --> init[init.py: Hardware & Sensors];
+        main --> effects[effects.py: Visual Renderers];
+        effects --> helpers[helpers.py: Math & Colors];
+        main --> mapper[ir_remote_mapper.py: Action Mapper];
+        main --> web[web_server.py: Non-Blocking Web Server];
+        init --> wifi[wifi_manager.py];
+        init --> bme[bme280.py];
+        init --> bh[bh1750.py];
+        init --> ds[ds3231.py];
+    end;
     
-    subgraph Custom C Modules (Core 1 / Hardware)
-        leddisplay_c[leddisplay: Text Rendering & Layout]
-        fft_c[fft_core1: I2S & FFT - Core 1 task]
-        ir_c[ir_core1: RMT IR Decoders - Core 1 task]
-        aleds_c[aleds_rgb: Native Pixel Driver]
-    end
+    subgraph Custom C Modules (Core 1 / Hardware);
+        leddisplay_c[leddisplay: Text Rendering & Layout];
+        fft_c[fft_core1: I2S & FFT - Core 1 task];
+        ir_c[ir_core1: RMT IR Decoders - Core 1 task];
+        aleds_c[aleds_rgb: Native Pixel Driver];
+    end;
 
-    effects --> leddisplay_c
-    main --> ir_c
-    init --> aleds_c
-    main --> fft_c
+    effects --> leddisplay_c;
+    main --> ir_c;
+    init --> aleds_c;
+    main --> fft_c;
 ```
 
 ### 1. Python Application & Drivers
