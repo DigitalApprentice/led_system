@@ -52,16 +52,8 @@ Below is the pin assignment configured in [init.py](file:///h:/Mój dysk/CLeds/C
 CLeds is divided into two distinct execution layers to ensure both performance and ease of configuration:
 
 ```mermaid
-%%{init: {"layout": "elk", "themeVariables": {"spacing": 30, "edgeSpacingFactor": 0.6}}}%%
+%%{init: {"layout": "elk", "themeVariables": {"spacing": 30, "edgeSpacingFactor": 0.6, "rectBorderRadius": 4}}}%%
 graph TD;
-    %% Legend
-    subgraph Legend["Legend"]
-        ctrl["Control Flow — Indigo (solid)"]
-        data["Sensor/Data Flow — Cyan (solid)"]
-        fb["Feedback/Render Loop — Green (dashed)"]
-        hw_in["Hardware Input — Orange (→ C module)"]
-        hw_out["Hardware Output — Orange (← C module)"]
-    end
 
     %% --- Level 1: Control Layer ---
     subgraph Control_Layer["Application Control Layer"]
@@ -125,6 +117,16 @@ graph TD;
     fft_c -.->|feedback| effects
     ir_c -.->|feedback| mapper
     aleds_c -.->|feedback| effects
+
+    %% --- Compact Legend (Scaled for Width) ---
+    subgraph Legend["Legend (Interaction & Flow Types)"]
+        direction LR
+        ctrl["Control Flow — Indigo (solid)"]:::control
+        data["Sensor/Data Flow — Cyan (solid)"]:::data
+        fb["Feedback/Render Loop — Green (dashed)"]:::feedback
+        hw_in["Hardware Input — Orange (→ C module)"]:::hw_in
+        hw_out["Hardware Output — Orange (← C module)"]:::hw_out
+    end
 
     %% Styling
     classDef python fill:#eef2ff,stroke:#818cf8
