@@ -53,7 +53,7 @@ CLeds is divided into two distinct execution layers to ensure both performance a
 
 ```mermaid
 graph TD;
-    subgraph 'MicroPython Layer (Core 0)';
+    subgraph MicroPython_Layer_Core 0;
         main[main.py: App Loop & Controls] --> init[init.py: Hardware & Sensors];
         main --> effects[effects.py: Visual Renderers];
         effects --> helpers[helpers.py: Math & Colors];
