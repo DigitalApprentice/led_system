@@ -38,7 +38,6 @@ AUTO_INTERVAL_MIN_MS   = 3000
 AUTO_INTERVAL_MAX_MS   = 60000
 BRIGHTNESS_STEP        = 16
 PARAM_LONG_STEPS       = 3
-TEMP_OFFSET            = -1.3
 IR_CONFIG_READY = True
 IR_MAP_FILE = "/ir_map.conf"
 
@@ -1083,7 +1082,7 @@ def update_overlay(c, ds, app, ir_reader=None):
     elif c.is_special_today[0]:
         event_name = c.is_special_today[1]
     temp = 0
-    temp = c.temperature + TEMP_OFFSET
+    temp = c.temperature + c.settings.get("temp_offset", -1.3)
     if event_name is None:
         sensor_msgs = [
             "{}".format(c.get_name_of_the_day(c.weekday)),

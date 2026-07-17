@@ -107,7 +107,7 @@ class NonBlockingWebServer:
     def send_json_status(self, client):
         c = self.c
         app = self.app
-        temp = c.temperature - 1.3  # TEMP_OFFSET
+        temp = c.temperature + c.settings.get("temp_offset", -1.3)
         
         status = {
             "time": {
@@ -190,6 +190,7 @@ class NonBlockingWebServer:
                         "index": idx,
                         "name": item["name"],
                         "category": item["category"],
+                        "mode": item["mode"],
                         "params": params_meta
                     }
                     f.write(json.dumps(item_dict))

@@ -952,10 +952,15 @@ class Controller:
         }
 
         self.SPECIAL_DAYS = {
+            (2, 18): "PATRYK URODZINY",
+            (2, 20): "MAGDALENKA URODZINY",
             (3, 8): "DZIEN KOBIET",
             (5, 26): "DZIEN MATKI",
             (6, 1): "DZIEN DZIECKA",
+            (6, 17): "ROCZNICA SLUBU",
             (6, 23): "DZIEN OJCA",
+            (7, 27): "TOMEK URODZINY",
+            (9, 10): "LAURKA URODZINY",
             (9, 30): "DZIEN CHLOPAKA",
             (10, 14): "DZIEN NAUCZYCIELA",
             (12, 6): "MIKOLAJKI",
@@ -1032,9 +1037,13 @@ class Controller:
             with open("settings.json", "r") as f:
                 self.settings = json.load(f)
             print("[Sync] Loaded settings.json successfully.")
+            if not isinstance(self.settings, dict):
+                self.settings = {}
+            self.settings.setdefault("temp_offset", -1.3)
         except Exception as e:
             print("[Sync] Failed to load settings.json:", e)
             self.settings = {
+                "temp_offset": -0.7,
                 "ntp_server": "pool.ntp.org",
                 "latitude": 51.177192,
                 "longitude": 17.00103,
@@ -1217,7 +1226,7 @@ class Controller:
 
     @micropython.native
     def get_polish_wind_direction(self, deg):
-        """Map wind direction in degrees to direction arrows designed in Font designer."""
+        """Map wind direction in degrees to Polish abbreviations."""
         if deg is None:
             return ""
         deg = deg % 360

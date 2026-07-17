@@ -1,4 +1,4 @@
-const CACHE_NAME = 'cleds-v5';
+const CACHE_NAME = 'cleds-v14';
 const ASSETS = [
   '/',
   '/index.html',
@@ -35,11 +35,30 @@ self.addEventListener('fetch', event => {
     return;
   }
   
+  // Main page should be Network-First to ensure updates are served immediately when online
+  const url = new URL(event.request.url);
+  if (url.pathname === '/' || url.pathname === '/index.html') {
+    event.respondWith(
+      fetch(event.request)
+        .then(networkResponse => {
+          if (networkResponse.status === 200) {
+            const responseClone = networkResponse.clone();
+            caches.open(CACHE_NAME).then(cache => cache.put(event.request, responseClone));
+          }
+          return networkResponse;
+        })
+        .catch(() => {
+          return caches.match(event.request);
+        })
+    );
+    return;
+  }
+
+  // Other assets can use Stale-While-Revalidate
   event.respondWith(
     caches.match(event.request)
       .then(cachedResponse => {
         if (cachedResponse) {
-          // Fetch update in background, update cache
           fetch(event.request).then(networkResponse => {
             if (networkResponse.status === 200) {
               caches.open(CACHE_NAME).then(cache => cache.put(event.request, networkResponse));

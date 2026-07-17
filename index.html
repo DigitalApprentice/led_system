@@ -24,6 +24,41 @@
       --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
     }
 
+    /* Custom Popover Color Picker */
+    .color-popover {
+      display: none;
+      position: absolute;
+      background: #151a22;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 12px;
+      z-index: 10000;
+      flex-direction: column;
+      gap: 10px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+      width: 220px;
+    }
+    
+    .hue-slider {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 12px;
+      border-radius: 6px;
+      background: linear-gradient(to right, red, orange, yellow, green, cyan, blue, purple, red);
+      outline: none;
+      margin: 8px 0;
+    }
+    
+    .hue-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: white;
+      border: 2px solid rgba(0,0,0,0.5);
+      cursor: pointer;
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -1027,6 +1062,15 @@
           </div>
         </div>
 
+        <div class="grid-2">
+          <div class="form-group">
+            <label>Temperature Offset (°C)</label>
+            <input type="number" id="sett-temp-offset" step="0.1" placeholder="-1.3">
+          </div>
+          <div class="form-group">
+          </div>
+        </div>
+
         <div class="toggle-container">
           <div class="toggle-info">
             <span class="toggle-label">Daylight Saving Time (DST)</span>
@@ -1120,6 +1164,33 @@
   </main>
 
   <div class="toast" id="toast">Settings Saved Successfully</div>
+
+  <!-- Global Color Picker Popover -->
+  <div id="global-color-picker" class="color-popover">
+    <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.8rem; font-weight:600; color:#8892b0; margin-bottom:4px;">
+      <span>Color Picker</span>
+      <button class="btn" style="padding:2px 8px; font-size:0.75rem; background:none; border:none; color:var(--text-main);" onclick="closeGlobalColorPicker()">Close</button>
+    </div>
+    
+    <!-- Saturation/Value Area -->
+    <div style="position:relative; width:196px; height:120px; border-radius:8px; overflow:hidden; cursor:crosshair;" 
+         onmousedown="startColorDrag(event)" ontouchstart="startColorDrag(event)">
+      <canvas id="popover-canvas" width="196" height="120" style="width:100%; height:100%; display:block;"></canvas>
+      <div id="popover-cursor" style="position:absolute; width:12px; height:12px; border:2px solid #fff; border-radius:50%; box-shadow:0 0 2px rgba(0,0,0,0.5); pointer-events:none; transform:translate(-6px, -6px); left:0; top:0;"></div>
+    </div>
+    
+    <!-- Hue Slider -->
+    <input type="range" id="popover-hue" min="0" max="360" value="0" class="hue-slider" oninput="updatePopoverHue()">
+    
+    <!-- RGB & Hex Display & OK Button -->
+    <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; border-top:1px solid rgba(255,255,255,0.05); padding-top:8px;">
+      <div style="display:flex; flex-direction:column; gap:2px;">
+        <span id="popover-hex" style="font-size:0.85rem; font-weight:800; color:var(--primary);">#FF0000</span>
+        <span id="popover-rgb" style="font-size:0.7rem; color:#8892b0;">rgb(255, 0, 0)</span>
+      </div>
+      <button class="btn active" style="padding: 6px 12px; font-size:0.8rem;" onclick="commitGlobalColorPicker()">OK</button>
+    </div>
+  </div>
 
   <script>
     let catalog = [];
@@ -1249,6 +1320,7 @@
     function populateSettingsFields(sys) {
       document.getElementById('sett-ntp-server').value = sys.ntp_server || 'pool.ntp.org';
       document.getElementById('sett-timezone').value = sys.timezone_offset;
+      document.getElementById('sett-temp-offset').value = sys.temp_offset !== undefined ? sys.temp_offset : -0.7
       document.getElementById('sett-dst').checked = sys.dst_enabled === true || sys.dst_enabled === 1 || sys.dst_enabled === '1';
       document.getElementById('sett-lat').value = sys.latitude;
       document.getElementById('sett-lon').value = sys.longitude;
@@ -1437,12 +1509,11 @@
                 html += `
                   <div class="color-picker-container" style="background:rgba(255,255,255,0.01); border:1px solid rgba(255,255,255,0.03); padding:12px; border-radius:12px; display:flex; flex-direction:column; gap:8px;">
                     <div style="display:flex; justify-content:space-between; font-size:0.85rem; font-weight:600;">
-                      <span>${pName}</span>
+                      <span>${getParameterLabel(pName)}</span>
                       <span class="val" style="color:var(--primary); font-weight:800;">${isRandom ? 'Random' : (isRainbowCycle ? 'Rainbow Cycle' : (isRainbowGradient ? 'Rainbow Gradient' : colorHex))}</span>
                     </div>
                     <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
-                      <div class="color-preview-box" style="position:relative; width:44px; height:44px; border-radius:12px; overflow:hidden; border:1px solid rgba(255,255,255,0.1); flex-shrink:0; background:${isRandom ? 'radial-gradient(circle, #ff007f, #7f00ff, #00f0ff)' : (isRainbowCycle ? 'linear-gradient(45deg, red, yellow, green, blue, purple)' : (isRainbowGradient ? 'linear-gradient(135deg, red, orange, yellow, green, blue, indigo, violet)' : colorHex))};">
-                        <input type="color" id="${inputId}" value="${colorHex}" onchange="changeColorParam(${ledNum}, '${pName}', this.value)" style="position:absolute; top:-8px; left:-8px; width:60px; height:60px; border:none; padding:0; cursor:pointer; background:none; opacity:${isSpecial ? 0 : 1};">
+                      <div class="color-preview-box" id="led${ledNum}-p-${pName}-preview" onclick="openGlobalColorPicker(this, ${ledNum}, '${pName}')" style="position:relative; width:44px; height:44px; border-radius:12px; overflow:hidden; border:1px solid rgba(255,255,255,0.1); cursor:pointer; flex-shrink:0; background:${isRandom ? 'radial-gradient(circle, #ff007f, #7f00ff, #00f0ff)' : (isRainbowCycle ? 'linear-gradient(45deg, red, yellow, green, blue, purple)' : (isRainbowGradient ? 'linear-gradient(135deg, red, orange, yellow, green, blue, indigo, violet)' : colorHex))};">
                       </div>
                       <button class="btn ${isRandom ? 'active' : ''}" style="padding: 8px 10px; font-size:0.8rem;" onclick="changeColorParamSpecial(${ledNum}, '${pName}', 'RM')">🎲 Random</button>
                       <button class="btn ${isRainbowCycle ? 'active' : ''}" style="padding: 8px 10px; font-size:0.8rem;" onclick="changeColorParamSpecial(${ledNum}, '${pName}', 'R')">🌈 Cycle</button>
@@ -1455,7 +1526,7 @@
                 html += `
                   <div class="toggle-container" style="background:rgba(255,255,255,0.01); border:1px solid rgba(255,255,255,0.03); padding:10px 12px; border-radius:12px;">
                     <div class="toggle-info">
-                      <span class="toggle-label">${pName}</span>
+                      <span class="toggle-label">${getParameterLabel(pName)}</span>
                     </div>
                     <label class="switch">
                       <input type="checkbox" id="${inputId}" ${checked} onchange="changeParam(${ledNum}, '${pName}', this.checked ? 1 : 0)">
@@ -1467,7 +1538,7 @@
                 html += `
                   <div class="slider-container">
                     <div class="slider-header">
-                      <span>${pName}</span>
+                      <span>${getParameterLabel(pName)}</span>
                       <span class="val" id="${inputId}-val">${pVal}</span>
                     </div>
                     <div class="slider-wrapper">
@@ -1489,41 +1560,41 @@
         catalogItem.params.forEach(p => {
           const pName = p.name;
           const pVal = ledState.params[pName] !== undefined ? ledState.params[pName] : p.default;
-          const inputId = `led${ledNum}-p-${pName}`;
-          const input = document.getElementById(inputId);
           
-          if (input && document.activeElement !== input) {
-            if (p.type === 'color') {
-              let colorHex = '#ff0000';
-              let isRandom = pVal === 'RM';
-              const rainbowVal = ledState.params['rainbow'] === true || ledState.params['rainbow'] === 1;
-              let isRainbowCycle = pVal === 'R' && !rainbowVal;
-              let isRainbowGradient = pVal === 'RG' || (pVal === 'R' && rainbowVal);
-              let isSpecial = isRandom || isRainbowCycle || isRainbowGradient;
-              if (Array.isArray(pVal) && pVal.length >= 3) {
-                colorHex = rgbToHex(pVal[0], pVal[1], pVal[2]);
-              }
-              input.value = colorHex;
-              input.style.opacity = isSpecial ? '0' : '1';
-              
-              const containerEl = input.closest('.color-picker-container');
-              if (containerEl) {
-                const previewEl = containerEl.querySelector('.color-preview-box');
-                if (previewEl) {
-                  previewEl.style.background = isRandom ? 'radial-gradient(circle, #ff007f, #7f00ff, #00f0ff)' : (isRainbowCycle ? 'linear-gradient(45deg, red, yellow, green, blue, purple)' : (isRainbowGradient ? 'linear-gradient(135deg, red, orange, yellow, green, blue, indigo, violet)' : colorHex));
-                }
-                const valEl = containerEl.querySelector('.val');
-                if (valEl) {
-                  valEl.innerText = isRandom ? 'Random' : (isRainbowCycle ? 'Rainbow Cycle' : (isRainbowGradient ? 'Rainbow Gradient' : colorHex));
-                }
-              }
-            } else if (p.min === 0 && p.max === 1 && p.step === 1) {
-              input.checked = pVal === 1 || pVal === true;
-            } else {
-              input.value = pVal;
-              const valEl = document.getElementById(`${inputId}-val`);
+          if (p.type === 'color') {
+            let colorHex = '#ff0000';
+            let isRandom = pVal === 'RM';
+            const rainbowVal = ledState.params['rainbow'] === true || ledState.params['rainbow'] === 1;
+            let isRainbowCycle = pVal === 'R' && !rainbowVal;
+            let isRainbowGradient = pVal === 'RG' || (pVal === 'R' && rainbowVal);
+            
+            if (Array.isArray(pVal) && pVal.length >= 3) {
+              colorHex = rgbToHex(pVal[0], pVal[1], pVal[2]);
+            }
+            
+            const previewEl = document.getElementById(`led${ledNum}-p-${pName}-preview`);
+            if (previewEl) {
+              previewEl.style.background = isRandom ? 'radial-gradient(circle, #ff007f, #7f00ff, #00f0ff)' : (isRainbowCycle ? 'linear-gradient(45deg, red, yellow, green, blue, purple)' : (isRainbowGradient ? 'linear-gradient(135deg, red, orange, yellow, green, blue, indigo, violet)' : colorHex));
+            }
+            const containerEl = previewEl ? previewEl.closest('.color-picker-container') : null;
+            if (containerEl) {
+              const valEl = containerEl.querySelector('.val');
               if (valEl) {
-                valEl.innerText = pVal;
+                valEl.innerText = isRandom ? 'Random' : (isRainbowCycle ? 'Rainbow Cycle' : (isRainbowGradient ? 'Rainbow Gradient' : colorHex));
+              }
+            }
+          } else {
+            const inputId = `led${ledNum}-p-${pName}`;
+            const input = document.getElementById(inputId);
+            if (input && document.activeElement !== input) {
+              if (p.min === 0 && p.max === 1 && p.step === 1) {
+                input.checked = pVal === 1 || pVal === true;
+              } else {
+                input.value = pVal;
+                const valEl = document.getElementById(`${inputId}-val`);
+                if (valEl) {
+                  valEl.innerText = pVal;
+                }
               }
             }
           }
@@ -1587,6 +1658,266 @@
       changeParam(ledNum, paramName, next);
     }
 
+    let currentPickerTarget = { ledNum: 1, pName: '', swatchEl: null };
+    let popoverHue = 0;
+    let popoverSat = 100;
+    let popoverVal = 100;
+    let isDraggingPopoverColor = false;
+
+    function openGlobalColorPicker(swatchEl, ledNum, pName) {
+      currentPickerTarget = { ledNum, pName, swatchEl };
+      
+      const popover = document.getElementById('global-color-picker');
+      
+      // Position popover safely inside viewport
+      const rect = swatchEl.getBoundingClientRect();
+      let left = rect.left + window.scrollX;
+      let top = rect.bottom + window.scrollY + 8;
+      const popoverWidth = 220 + 24;
+      if (left + popoverWidth > window.innerWidth) {
+        left = window.innerWidth - popoverWidth - 16;
+      }
+      left = Math.max(16, left);
+      popover.style.left = `${left}px`;
+      popover.style.top = `${top}px`;
+      popover.style.display = 'flex';
+      
+      const ledState = state[`led${ledNum}`];
+      const pVal = ledState.params[pName];
+      let rgb = [255, 0, 0];
+      if (Array.isArray(pVal) && pVal.length >= 3) {
+        rgb = pVal;
+      }
+      
+      const hsv = rgbToHsv(rgb[0], rgb[1], rgb[2]);
+      popoverHue = hsv.h;
+      popoverSat = hsv.s;
+      popoverVal = hsv.v;
+      
+      document.getElementById('popover-hue').value = popoverHue;
+      
+      drawPopoverSpectrum();
+      updatePopoverCursorPosition();
+      updatePopoverColorDetails(rgb[0], rgb[1], rgb[2]);
+      
+      document.addEventListener('mousemove', handlePopoverDrag);
+      document.addEventListener('mouseup', endPopoverDrag);
+      document.addEventListener('touchmove', handlePopoverDrag, { passive: false });
+      document.addEventListener('touchend', endPopoverDrag);
+    }
+
+    function drawPopoverSpectrum() {
+      const canvas = document.getElementById('popover-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const w = canvas.width;
+      const h = canvas.height;
+      
+      ctx.fillStyle = `hsl(${popoverHue}, 100%, 50%)`;
+      ctx.fillRect(0, 0, w, h);
+      
+      const whiteGrad = ctx.createLinearGradient(0, 0, w, 0);
+      whiteGrad.addColorStop(0, 'rgba(255, 255, 255, 1)');
+      whiteGrad.addColorStop(1, 'rgba(255, 255, 255, 0)');
+      ctx.fillStyle = whiteGrad;
+      ctx.fillRect(0, 0, w, h);
+      
+      const blackGrad = ctx.createLinearGradient(0, 0, 0, h);
+      blackGrad.addColorStop(0, 'rgba(0, 0, 0, 0)');
+      blackGrad.addColorStop(1, 'rgba(0, 0, 0, 1)');
+      ctx.fillStyle = blackGrad;
+      ctx.fillRect(0, 0, w, h);
+    }
+
+    function updatePopoverCursorPosition() {
+      const canvas = document.getElementById('popover-canvas');
+      const cursor = document.getElementById('popover-cursor');
+      if (!canvas || !cursor) return;
+      cursor.style.left = `${popoverSat}%`;
+      cursor.style.top = `${100 - popoverVal}%`;
+    }
+
+    function startColorDrag(e) {
+      isDraggingPopoverColor = true;
+      handlePopoverDrag(e);
+    }
+
+    function handlePopoverDrag(e) {
+      if (!isDraggingPopoverColor) return;
+      const canvas = document.getElementById('popover-canvas');
+      if (!canvas) return;
+      
+      const rect = canvas.getBoundingClientRect();
+      let clientX = e.clientX;
+      let clientY = e.clientY;
+      if (e.touches && e.touches[0]) {
+        clientX = e.touches[0].clientX;
+        clientY = e.touches[0].clientY;
+        e.preventDefault();
+      }
+      
+      let x = Math.max(0, Math.min(rect.width, clientX - rect.left));
+      let y = Math.max(0, Math.min(rect.height, clientY - rect.top));
+      
+      popoverSat = Math.round((x / rect.width) * 100);
+      popoverVal = Math.round((1 - y / rect.height) * 100);
+      
+      updatePopoverCursorPosition();
+      
+      const rgb = hsvToRgb(popoverHue, popoverSat, popoverVal);
+      updatePopoverColorDetails(rgb[0], rgb[1], rgb[2]);
+      
+      const hexVal = rgbToHex(rgb[0], rgb[1], rgb[2]);
+      throttleColorChange(currentPickerTarget.ledNum, currentPickerTarget.pName, hexVal);
+      
+      if (currentPickerTarget.swatchEl) {
+        currentPickerTarget.swatchEl.style.background = hexVal;
+        const container = currentPickerTarget.swatchEl.closest('.color-picker-container');
+        if (container) {
+          const valEl = container.querySelector('.val');
+          if (valEl) valEl.innerText = hexVal;
+        }
+      }
+    }
+
+    function endPopoverDrag() {
+      isDraggingPopoverColor = false;
+    }
+
+    function updatePopoverHue() {
+      popoverHue = parseInt(document.getElementById('popover-hue').value) || 0;
+      drawPopoverSpectrum();
+      
+      const rgb = hsvToRgb(popoverHue, popoverSat, popoverVal);
+      updatePopoverColorDetails(rgb[0], rgb[1], rgb[2]);
+      
+      const hexVal = rgbToHex(rgb[0], rgb[1], rgb[2]);
+      throttleColorChange(currentPickerTarget.ledNum, currentPickerTarget.pName, hexVal);
+      
+      if (currentPickerTarget.swatchEl) {
+        currentPickerTarget.swatchEl.style.background = hexVal;
+        const container = currentPickerTarget.swatchEl.closest('.color-picker-container');
+        if (container) {
+          const valEl = container.querySelector('.val');
+          if (valEl) valEl.innerText = hexVal;
+        }
+      }
+    }
+
+    function updatePopoverColorDetails(r, g, b) {
+      const hex = rgbToHex(r, g, b);
+      document.getElementById('popover-hex').innerText = hex.toUpperCase();
+      document.getElementById('popover-rgb').innerText = `rgb(${r}, ${g}, ${b})`;
+    }
+
+    async function commitGlobalColorPicker() {
+      const rgb = hsvToRgb(popoverHue, popoverSat, popoverVal);
+      const valStr = `[${rgb[0]},${rgb[1]},${rgb[2]}]`;
+      const { ledNum, pName } = currentPickerTarget;
+      
+      if (state && state[`led${ledNum}`]) {
+        state[`led${ledNum}`].params[pName] = rgb;
+      }
+      
+      await fetch(`/api/control?led=${ledNum}&param=${pName}&val=${valStr}`);
+      updateStatus();
+      closeGlobalColorPicker();
+    }
+
+    function closeGlobalColorPicker() {
+      const popover = document.getElementById('global-color-picker');
+      if (popover) popover.style.display = 'none';
+      
+      document.removeEventListener('mousemove', handlePopoverDrag);
+      document.removeEventListener('mouseup', endPopoverDrag);
+      document.removeEventListener('touchmove', handlePopoverDrag);
+      document.removeEventListener('touchend', endPopoverDrag);
+    }
+
+    // Dismiss popover when clicking outside
+    document.addEventListener('mousedown', function(e) {
+      const popover = document.getElementById('global-color-picker');
+      if (!popover || popover.style.display === 'none') return;
+      if (!popover.contains(e.target) && (!currentPickerTarget.swatchEl || !currentPickerTarget.swatchEl.contains(e.target))) {
+        closeGlobalColorPicker();
+      }
+    });
+
+    document.addEventListener('touchstart', function(e) {
+      const popover = document.getElementById('global-color-picker');
+      if (!popover || popover.style.display === 'none') return;
+      if (!popover.contains(e.target) && (!currentPickerTarget.swatchEl || !currentPickerTarget.swatchEl.contains(e.target))) {
+        closeGlobalColorPicker();
+      }
+    });
+
+    function rgbToHsv(r, g, b) {
+      r /= 255, g /= 255, b /= 255;
+      const max = Math.max(r, g, b), min = Math.min(r, g, b);
+      let h, s, v = max;
+      const d = max - min;
+      s = max === 0 ? 0 : d / max;
+      if (max === min) {
+        h = 0;
+      } else {
+        switch (max) {
+          case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+          case g: h = (b - r) / d + 2; break;
+          case b: h = (r - g) / d + 4; break;
+        }
+        h /= 6;
+      }
+      return {
+        h: Math.round(h * 360),
+        s: Math.round(s * 100),
+        v: Math.round(v * 100)
+      };
+    }
+
+    function hsvToRgb(h, s, v) {
+      h = h / 360;
+      s = s / 100;
+      v = v / 100;
+      let r, g, b;
+      let i = Math.floor(h * 6);
+      let f = h * 6 - i;
+      let p = v * (1 - s);
+      let q = v * (1 - f * s);
+      let t = v * (1 - (1 - f) * s);
+      switch (i % 6) {
+        case 0: r = v, g = t, b = p; break;
+        case 1: r = q, g = v, b = p; break;
+        case 2: r = p, g = v, b = t; break;
+        case 3: r = p, g = q, b = v; break;
+        case 4: r = t, g = p, b = v; break;
+        case 5: r = v, g = p, b = q; break;
+      }
+      return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
+    }
+
+    function getParameterLabel(pName) {
+      const name = pName.toLowerCase();
+      if (name.startsWith('pos_') && name.slice(4).match(/^\d+$/)) {
+        return 'Position';
+      }
+      if (name.startsWith('height_') && name.slice(7).match(/^\d+$/)) {
+        return 'Length';
+      }
+      if (name === 'color_p' || name === 'color_s' || name === 'color_t' || name === 'color_q') {
+        return 'Color';
+      }
+      if (name === 'hue_p' || name === 'hue_s' || name === 'hue_t' || name === 'hue_q') {
+        return 'Hue';
+      }
+      if (name === 'pos') return 'Position';
+      if (name === 'height') return 'Length';
+      
+      return pName
+        .split('_')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
+    }
+
     function rgbToHex(r, g, b) {
       return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
     }
@@ -1600,12 +1931,11 @@
       ] : [255, 0, 0];
     }
 
-    async function changeColorParam(ledNum, paramName, hexVal) {
+    const throttleColorChange = throttle(async function(ledNum, paramName, hexVal) {
       const rgb = hexToRgb(hexVal);
       const valStr = `[${rgb[0]},${rgb[1]},${rgb[2]}]`;
       await fetch(`/api/control?led=${ledNum}&param=${paramName}&val=${valStr}`);
-      updateStatus();
-    }
+    }, 120);
     
     async function changeColorParamSpecial(ledNum, paramName, type) {
       await fetch(`/api/control?led=${ledNum}&param=${paramName}&val=${type}`);
@@ -1623,23 +1953,16 @@
       const hasColorT = params.some(p => p.name === 'color_t');
       const hasColorQ = params.some(p => p.name === 'color_q');
       
-      let filteredParams = params.filter(p => {
-        const name = p.name;
-        if (name === 'hue_p' && hasColorP) return false;
-        if (name === 'hue_s' && hasColorS) return false;
-        if (name === 'hue_t' && hasColorT) return false;
-        if (name === 'hue_q' && hasColorQ) return false;
-        return true;
-      });
+      let filteredParams = params;
 
       let sections = [];
       let groupedKeys = new Set();
       
       const barSuffixes = [
-        { index: 0, suffix: '0', color: 'color_p', title: 'Bar 0 (Left)' },
-        { index: 1, suffix: '1', color: 'color_s', title: 'Bar 1 (Middle-Left)' },
-        { index: 2, suffix: '2', color: 'color_t', title: 'Bar 2 (Middle-Right)' },
-        { index: 3, suffix: '3', color: 'color_q', title: 'Bar 3 (Right)' }
+        { index: 0, suffix: '0', color: 'color_p', hue: 'hue_p', title: 'Bar 1 (Left)' },
+        { index: 1, suffix: '1', color: 'color_s', hue: 'hue_s', title: 'Bar 2 (Middle-Left)' },
+        { index: 2, suffix: '2', color: 'color_t', hue: 'hue_t', title: 'Bar 3 (Middle-Right)' },
+        { index: 3, suffix: '3', color: 'color_q', hue: 'hue_q', title: 'Bar 4 (Right)' }
       ];
       
       if (effectMode === 'static_bars') {
@@ -1647,7 +1970,7 @@
           let barParams = [];
           filteredParams.forEach(p => {
             const name = p.name.toLowerCase();
-            if (name === `pos_${bar.index}` || name === `height_${bar.index}` || name === bar.color) {
+            if (name === `pos_${bar.index}` || name === `height_${bar.index}` || name === bar.color || name === bar.hue) {
               barParams.push(p);
               groupedKeys.add(p.name);
             }
@@ -1657,8 +1980,8 @@
             barParams.sort((a, b) => {
               const nameA = a.name.toLowerCase();
               const nameB = b.name.toLowerCase();
-              if (nameA.startsWith('color_')) return -1;
-              if (nameB.startsWith('color_')) return 1;
+              if (nameA.startsWith('color_') || nameA.startsWith('hue_')) return -1;
+              if (nameB.startsWith('color_') || nameB.startsWith('hue_')) return 1;
               if (nameA.startsWith('pos_')) return -1;
               if (nameB.startsWith('pos_')) return 1;
               return 0;
@@ -1741,6 +2064,7 @@
     async function saveSystemSettings() {
       const ntp = document.getElementById('sett-ntp-server').value;
       const tz = document.getElementById('sett-timezone').value;
+      const tempOffset = document.getElementById('sett-temp-offset').value;
       const dst = document.getElementById('sett-dst').checked ? 1 : 0;
       const lat = document.getElementById('sett-lat').value;
       const lon = document.getElementById('sett-lon').value;
@@ -1756,6 +2080,7 @@
       try {
         await fetch(`/api/control?setting=ntp_server&val=${ntp}`);
         await fetch(`/api/control?setting=timezone_offset&val=${tz}`);
+        await fetch(`/api/control?setting=temp_offset&val=${tempOffset}`);
         await fetch(`/api/control?setting=dst_enabled&val=${dst}`);
         await fetch(`/api/control?setting=latitude&val=${lat}`);
         await fetch(`/api/control?setting=longitude&val=${lon}`);
@@ -1775,6 +2100,7 @@
           Object.assign(state.global.settings, {
             ntp_server: ntp,
             timezone_offset: parseFloat(tz),
+            temp_offset: parseFloat(tempOffset),
             dst_enabled: dst === 1,
             latitude: parseFloat(lat),
             longitude: parseFloat(lon),
