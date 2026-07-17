@@ -952,15 +952,10 @@ class Controller:
         }
 
         self.SPECIAL_DAYS = {
-            (2, 18): "PATRYK URODZINY",
-            (2, 20): "MAGDALENKA URODZINY",
             (3, 8): "DZIEN KOBIET",
             (5, 26): "DZIEN MATKI",
             (6, 1): "DZIEN DZIECKA",
-            (6, 17): "ROCZNICA SLUBU",
             (6, 23): "DZIEN OJCA",
-            (7, 27): "TOMEK URODZINY",
-            (9, 10): "LAURKA URODZINY",
             (9, 30): "DZIEN CHLOPAKA",
             (10, 14): "DZIEN NAUCZYCIELA",
             (12, 6): "MIKOLAJKI",
@@ -1222,7 +1217,7 @@ class Controller:
 
     @micropython.native
     def get_polish_wind_direction(self, deg):
-        """Map wind direction in degrees to Polish abbreviations."""
+        """Map wind direction in degrees to direction arrows designed in Font designer."""
         if deg is None:
             return ""
         deg = deg % 360
